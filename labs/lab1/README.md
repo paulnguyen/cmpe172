@@ -1,2 +1,3 @@
-# cmpe172
-CMPE 172 Course Repository 
+# CMPE 172 Lab #1 - Hello Spring
+
+

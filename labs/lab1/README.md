@@ -13,6 +13,8 @@ In this Lab, you will be bulling the Spring Demo App using different Spring Tool
 
 ### Spring Demo App Using Spring Initializr
 
+![Spring Initializr](images/spring-initializr.png)
+
 ### Spring Demo App Using Spring Tools in Visual Studio Code
 
 ### Spring Demo App Configured for Docker and Kubernettes

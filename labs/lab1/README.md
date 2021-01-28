@@ -13,6 +13,42 @@ In this Lab, you will be bulling the Spring Demo App using different Spring Tool
 
 ### Spring Demo App Using Spring Initializr
 
+1. Generate a New Spring Boot Project using the following parameters via https://start.spring.io/ (online Spring Boot Initializr).
+* Project: Gradle Project
+* Language: Java Language
+* Spring Boot Version: 2.4.2
+* Group: com.example
+* Artifact: demo-initializr
+* Name: demo-initializr
+* Package Name: come.example.demo-initializr
+* Packaging: Jar
+* Dependencies:
+  * Spring Web
+
+2. Extract the Zip file and store in your Git Folder /labs/lab1/demo-initializr.  Make changes to the App using the following code. Note: you will need to modify the Class Name to match the code generated.
+
+```
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
+public class DemoXXXApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoXXXApplication.class, args);
+	}
+
+	@GetMapping("/hello")
+	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+		return String.format("Hello %s!", name);
+	}
+}
+```
+
 ![Spring Initializr](images/spring-initializr.png)
 
 ### Spring Demo App Using Spring Tools in Visual Studio Code

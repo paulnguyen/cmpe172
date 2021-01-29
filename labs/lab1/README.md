@@ -141,7 +141,7 @@ public class DemoXXXApplication {
 
 - [ ] Build Docker Image
 - [ ] Run Docker Container in Docker Desktop (Locally)
-- [ ] Run Docker Container in Google Cloud Kubernettes Engine
+- [ ] Run Docker Container in Google Cloud Kubernetes Engine
 
 Files (add to demo-docker project):
 * Dockerfile 
@@ -156,7 +156,7 @@ Follow the instructions from Demos in class.
 
 ## Part 2 -- Spring Taco Cloud App
 
-Using the Sample code from Chapter 1 of *Spring in Action 5th Edition*, create the Tacos Spring Boot project in /labs/lab1/tacos-cloud and deploy the Application on go Google Cloud Kubernettes Engine.  
+Using the Sample code from Chapter 1 of *Spring in Action 5th Edition*, create the Tacos Spring Boot project in /labs/lab1/tacos-cloud and deploy the Application on go Google Cloud Kubernetes Engine.  
 
 Take Screenshots showing:  
 

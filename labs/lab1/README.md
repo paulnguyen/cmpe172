@@ -95,6 +95,7 @@ public class DemoXXXApplication {
 
 3. Run the Spring Demo App from Visual Studio Code in "Debug Mode" with the message: *Hello CMPE 172!*.  Take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
 
+![Spring Debub](images/spring-debug.png)
 
 
 ### Spring Demo App Configured for Docker and Kubernettes

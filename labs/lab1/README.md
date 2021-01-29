@@ -1,4 +1,4 @@
-# CMPE 172 Lab #1 - Hello Spring
+# CMPE 172 - Lab #1 - Hello Spring
 
 In this Lab, you will be bulling the Spring Demo App using different Spring Tools and deploying the Demos on Docker and Google Cloud.  Your work should be commited on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  You submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
 

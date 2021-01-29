@@ -6,6 +6,7 @@ In this Lab, you will be bulling the Spring Demo App using different Spring Tool
   * demo-initializr
   * demo-vscode
   * demo-docker
+  * tacos-cloud
   * images (screenshots)
   * README.md (lab notes)
 
@@ -148,7 +149,17 @@ Files (add to demo-docker project):
 * pod.yaml
 * service.yaml
 
+Take "Screenshots" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.  Screenshots should include:  Spring Boot App running from Docker Desktop and Google Cloud.
+
 Follow the instructions from Demos in class.
 
 
 ## Part 2 -- Spring Taco Cloud App
+
+Using the Sample code from Chapter 1 of *Spring in Action 5th Edition*, create the Tacos Spring Boot project in /labs/lab1/tacos-cloud and deploy the Application on go Google Cloud Kubernettes Engine.  
+
+Take Screenshots showing:  
+
+1. The Tacos Cloud Pod Workload
+2. The Tacos Cloud Service (show Public IP and Port)
+3. Browser Showing Tacos Cloud App Running

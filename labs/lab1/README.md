@@ -56,15 +56,15 @@ public class DemoXXXApplication {
 
 ### Spring Demo App Using Spring Tools in Visual Studio Code
 
-1. Generate a New Spring Boot Project using the following parameters from Visual Studio Code:
+1. Generate a New Spring Boot Project using the following parameters from Visual Studio Code. Store in your Git Folder /labs/lab1/demo-vscode.
 
 * Project: Gradle Project
 * Language: Java Language
 * Spring Boot Version: 2.4.2
 * Group: com.example
-* Artifact: demo-initializr
-* Name: demo-initializr
-* Package Name: come.example.demo-initializr
+* Artifact: demo-vscode
+* Name: demo-vscode
+* Package Name: come.example.demo-vscode
 * Packaging: Jar
 * Dependencies:
   * Spring Web
@@ -95,10 +95,60 @@ public class DemoXXXApplication {
 
 3. Run the Spring Demo App from Visual Studio Code in "Debug Mode" with the message: *Hello CMPE 172!*.  Take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
 
-![Spring Debub](images/spring-debug.png)
+![Spring Debug](images/spring-debug.png)
 
 
 ### Spring Demo App Configured for Docker and Kubernettes
+
+1. Generate a New Spring Boot Project using the following parameters from Visual Studio Code or using Spring Boot Initializr. Store in your Git Folder /labs/lab1/demo-docker.
+
+* Project: Gradle Project
+* Language: Java Language
+* Spring Boot Version: 2.4.2
+* Group: com.example
+* Artifact: demo-docker
+* Name: demo-vscode
+* Package Name: come.example.demo-docker
+* Packaging: Jar
+* Dependencies:
+  * Spring Web
+
+2. Make the Appropriate Code Changes using the following:
+
+```
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
+public class DemoXXXApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoXXXApplication.class, args);
+	}
+
+	@GetMapping("/hello")
+	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+		return String.format("Hello %s!", name);
+	}
+}
+```
+3. Using the Lab files provided, Do the following:
+
+- [ ] Build Docker Image
+- [ ] Run Docker Container in Docker Desktop (Locally)
+- [ ] Run Docker Container in Google Cloud Kubernettes Engine
+
+Files (add to demo-docker project):
+* Dockerfile 
+* Makefile
+* pod.yaml
+* service.yaml
+
+Follow the instructions from Demos in class.
 
 
 ## Part 2 -- Spring Taco Cloud App

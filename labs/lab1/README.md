@@ -163,3 +163,253 @@ Take Screenshots showing:
 1. The Tacos Cloud Pod Workload
 2. The Tacos Cloud Service (show Public IP and Port)
 3. Browser Showing Tacos Cloud App Running
+
+
+# Lab Notes and References
+
+
+## References
+
+* https://spring.io/projects/spring-boot
+* https://docs.spring.io/spring-boot/docs/ (archive)
+* https://docs.spring.io/spring-boot/docs/current/reference/html/ (current)
+* https://education.github.com/git-cheat-sheet-education.pdf (git cheatsheet)
+* https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf (markdown cheatsheet)
+* https://kubernetes.io/docs/reference/kubectl/cheatsheet/ (kubernetes cheatsheet)
+* https://docs.docker.com/engine/reference/commandline/cli/ (docker command line)
+* https://kubernetes.io/docs/concepts/workloads/pods/ (kubernetes pods)
+* https://kubernetes.io/docs/concepts/services-networking/service/ (kubernetes services)
+
+
+## Java JDK and Gradle Setup
+
+* https://sdkman.io/
+
+* Install SDK Man and use SDK Man to install JDK and Gradle
+
+* Commands:
+
+	sdk current 					(list current versions in use for JDK and Graddle)
+	sdk list java 					(list all versions available for java)
+	sdk install java <version>
+	sdk list gradle 				(lists all versions available for gradle)
+	sdk install gradle <version>
+
+* Sample Setup:
+
+```
+pnguyen@macbook ~ % sdk current
+
+Using:
+
+gradle: 5.6
+java: 11.0.10.j9-adpt
+
+```
+
+## Spring Initializr
+
+* https://start.spring.io/
+
+```
+    Project: Gradle Project
+    Language: Java Language (JDK 11)
+    Spring Boot Version: 2.4.2
+    Group: com.example
+    Artifact: demo-initializr
+    Name: demo-initializr
+    Package Name: come.example.demo-initializr
+    Packaging: Jar
+    Dependencies:
+        Spring Web
+```
+
+
+## Spring Quick Start Guide
+
+* https://spring.io/quickstart
+
+```
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
+public class DemoApplication {
+
+public static void main(String[] args) {
+	SpringApplication.run(DemoApplication.class, args);
+}
+
+@GetMapping("/hello")
+public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+	return String.format("Hello %s!", name);
+}
+}
+```
+
+* Commands:
+	
+	gradle build
+	gradle bootRun
+
+* URLS:
+
+	http://localhost:8080/hello
+	http://localhost:8080/hello?name=Amy
+
+
+## Spring Boot with Visual Studio Code
+
+* https://code.visualstudio.com/
+* https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-boot-dev-pack
+* https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-boot-dashboard
+
+* How to Use
+
+	Open VS Code and press F1 or Ctrl + Shift + P to open command palette
+	Type "Spring" to find Spring Boot Tools
+
+
+## Docker & Kubernetes with Spring Boot
+
+
+* Dockerfile (using OpenJDK 11)
+
+```
+FROM openjdk:11
+EXPOSE 8080
+ADD ./build/libs/demo-docker-1.0.jar /srv/demo-docker-1.0.jar
+CMD java -jar /srv/demo-docker-1.0.jar
+```
+
+* Kubernetes Pod
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-hello
+  namespace: default
+  labels:
+    name: spring-hello
+spec:
+  containers:
+    - image: paulnguyen/spring-hello:latest
+      name: spring-hello
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+```
+
+* Kubernetes Service
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-hello 
+  namespace: default
+spec:
+  # comment or delete the following line if you want to use a LoadBalancer
+  type: LoadBalancer
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  # type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080 
+  selector:
+    name: spring-hello
+```
+
+* Makefile (Build and Deploy)
+
+```
+all: clean
+
+clean:
+	gradle clean
+
+compile:
+	gradle build
+
+jar: compile
+	gradle bootJar
+
+run: jar
+	echo Starting Spring at:  http://localhost:8080
+	java -jar build/libs/demo-docker-1.0.jar
+
+# Docker
+
+docker-build: jar
+	docker build -t spring-hello .
+	docker images
+
+docker-run: docker-build
+	docker run --name spring-hello -td -p 80:8080 spring-hello	
+	docker ps
+
+docker-clean:
+	docker stop spring-hello
+	docker rm spring-hello
+	docker rmi spring-hello
+
+docker-shell:
+	docker exec -it spring-hello bash 
+
+docker-push:
+	docker login
+	docker build -t $(account)/spring-hello:latest -t $(account)/spring-hello:latest .
+	docker push $(account)/spring-hello:latest 
+
+# Pod
+
+pod-run:
+	kubectl apply -f pod.yaml
+
+pod-list:
+	kubectl get pods
+
+pod-desc:
+	kubectl describe pods spring-hello
+
+pod-delete:
+	kubectl delete -f pod.yaml
+
+pod-shell:
+	kubectl exec -it spring-hello -- /bin/bash
+
+pod-logs:
+	kubectl logs -f spring-hello
+
+# Service
+
+service-create:
+	kubectl create -f service.yaml
+
+service-get:
+	kubectl get services
+
+service-get-ip:
+	kubectl get service spring-hello -o wide
+
+service-delete:
+	kubectl delete service spring-hello
+```
+
+
+
+
+
+
+
+
+

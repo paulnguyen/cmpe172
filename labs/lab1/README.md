@@ -189,11 +189,13 @@ Take Screenshots showing:
 
 * Commands:
 
-	sdk current 					(list current versions in use for JDK and Graddle)
-	sdk list java 					(list all versions available for java)
-	sdk install java <version>
-	sdk list gradle 				(lists all versions available for gradle)
-	sdk install gradle <version>
+SDK Command | Notes
+----------- | ---------
+sdk current | list current versions in use for JDK and Graddle
+sdk list java |	list all versions available for java
+sdk install java <version> | install a specific version of java
+sdk list gradle | lists all versions available for gradle
+sdk install gradle <version> | install a specific version of gradle
 
 * Sample Setup:
 

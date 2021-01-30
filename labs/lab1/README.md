@@ -17,7 +17,7 @@ In this Lab, you will be building the Spring Demo App using different Spring Too
 1. Generate a New Spring Boot Project using the following parameters via https://start.spring.io/ (online Spring Boot Initializr).
 
 * Project: Gradle Project
-* Language: Java Language
+* Language: Java Language (JDK 11)
 * Spring Boot Version: 2.4.2
 * Group: com.example
 * Artifact: demo-initializr
@@ -60,7 +60,7 @@ public class DemoXXXApplication {
 1. Generate a New Spring Boot Project using the following parameters from Visual Studio Code. Store in your Git Folder /labs/lab1/demo-vscode.
 
 * Project: Gradle Project
-* Language: Java Language
+* Language: Java Language (JDK 11)
 * Spring Boot Version: 2.4.2
 * Group: com.example
 * Artifact: demo-vscode
@@ -104,7 +104,7 @@ public class DemoXXXApplication {
 1. Generate a New Spring Boot Project using the following parameters from Visual Studio Code or using Spring Boot Initializr. Store in your Git Folder /labs/lab1/demo-docker.
 
 * Project: Gradle Project
-* Language: Java Language
+* Language: Java Language (JDK 11)
 * Spring Boot Version: 2.4.2
 * Group: com.example
 * Artifact: demo-docker

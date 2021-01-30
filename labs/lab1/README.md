@@ -255,13 +255,13 @@ public String hello(@RequestParam(value = "name", defaultValue = "World") String
 
 * Commands:
 	
-	gradle build
-	gradle bootRun
+	* gradle build
+	* gradle bootRun
 
 * URLS:
 
-	http://localhost:8080/hello
-	http://localhost:8080/hello?name=Amy
+	* http://localhost:8080/hello
+	* http://localhost:8080/hello?name=Amy
 
 
 ## Spring Boot with Visual Studio Code

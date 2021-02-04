@@ -683,8 +683,11 @@ Using the Sample code from Chapter 2 of *Spring in Action 5th Edition*, copy you
 * https://spring.io/projects/spring-boot
 * https://spring.io/guides
 * https://github.com/spring-guides
-* https://spring.io/guides/gs/serving-web-content/
-* https://spring.io/guides/gs/testing-web/
+* https://spring.io/guides/gs/serving-web-content
+* https://spring.io/guides/gs/testing-web
+* https://spring.io/web-applications 
+* https://docs.spring.io/spring-framework/docs/current/reference/html
+* https://docs.spring.io/spring-framework/docs/current/javadoc-api
 
 
 

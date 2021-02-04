@@ -154,7 +154,7 @@ Take "Screenshots" of your Browser and Full Desktop and include this in your Lab
 Follow the instructions from Demos in class.
 
 
-## Part 2 -- Spring Tacos Cloud App
+## Part 2 -- Tacos Cloud App (Version 1)
 
 Using the Sample code from Chapter 1 of *Spring in Action 5th Edition*, create the Tacos Spring Boot project in /labs/lab1/tacos-cloud and deploy the Application on go Google Cloud Kubernetes Engine.  
 

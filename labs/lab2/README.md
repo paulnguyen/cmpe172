@@ -19,7 +19,7 @@ In this Lab, you will be exploring Spring MVC and Spring Testing on Docker and G
 
 1. Build and Deploy to GCP GKE the spring-mvc project based on https://spring.io/guides/gs/serving-web-content.  You may use the code sniplets below (modified from the Tutorial Page).
 
-2. Gengerate a new Gradle project as follows:
+2. Generate a new Gradle project as follows:
 
 ![spring-mvc-initializr](images/spring-mvc-initializr.png)
 
@@ -73,7 +73,7 @@ public class GreetingController {
 
 1. Build and Deploy to GCP GKE the spring-test project based on https://spring.io/guides/gs/testing-web.  You may use the code sniplets below (modified from the Tutorial Page).
 
-2. Gengerate a new Gradle project as follows:
+2. Generate a new Gradle project as follows:
 
 ![spring-test-initializr](images/spring-test-initializr.png)
 
@@ -296,7 +296,7 @@ public class WebMockTest {
 
 1. Build and Deploy to GCP GKE the spring-lombok project based on https://springframework.guru/spring-boot-with-lombok-part-1/.  You may use the code sniplets below (taken also from the Tutorial Page).
 
-2. Gengerate a new project as follows:
+2. Generate a new project as follows:
 
 ![spring-lombok-initializr](images/spring-lombok-initializr.png)
 

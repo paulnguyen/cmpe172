@@ -77,9 +77,7 @@ public class GreetingController {
 
 ![spring-test-initializr](images/spring-test-initializr.png)
 
-3. Run the Spring App in Google Cloud and take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
-
-4. *Run the Spring App Tests and take a "Screenshot" (Full Desktop) and include this in your Lab Notes README.md in GitHub the Test Results (See Example Below).*
+3. *Run the Spring App Tests and take a "Screenshot" (Full Desktop) and include this in your Lab Notes README.md in GitHub the Test Results (See Example Below).*
 
 ![spring-test-results](images/spring-test-results.png)
 

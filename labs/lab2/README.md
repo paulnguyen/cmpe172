@@ -23,7 +23,7 @@ In this Lab, you will be exploring Spring MVC and Spring Testing on Docker and G
 
 ![spring-mvc-initializr](images/spring-mvc-initializr.png)
 
-3. Run the Spring App in Google Cloud and take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
+3. *Run the Spring App in Google Cloud and take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.*
 
 
 #### Greeting Controller
@@ -79,7 +79,7 @@ public class GreetingController {
 
 3. Run the Spring App in Google Cloud and take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
 
-4. Run the Spring App Tests and take a "Screenshot" (Full Desktop) and include this in your Lab Notes README.md in GitHub the Test Results (See Example Below).
+4. *Run the Spring App Tests and take a "Screenshot" (Full Desktop) and include this in your Lab Notes README.md in GitHub the Test Results (See Example Below).*
 
 ![spring-test-results](images/spring-test-results.png)
 
@@ -300,7 +300,7 @@ public class WebMockTest {
 
 ![spring-lombok-initializr](images/spring-lombok-initializr.png)
 
-3. Run the Spring App locally and take "Screenshots" of test output (Full Desktop) and include this in your Lab Notes README.md in GitHub.  Have Screenshots for each of the tests below along with a discussion in your README.md for the Lab on:  a) The Lombok Annonation or Feature being tested and b) How does the Output verify your understanding of the Feature being tested?
+3. *Run the Spring App locally and take "Screenshots" of test output (Full Desktop) and include this in your Lab Notes README.md in GitHub.  Have Screenshots for each of the tests below along with a discussion in your README.md for the Lab on:  a) The Lombok Annonation or Feature being tested and b) How does the Output verify your understanding of the Feature being tested?*
 
 * ValAndVarUserDemo.print() ;
 * FieldLevelGetterSetterDemo.print() ;
@@ -673,7 +673,7 @@ public class NonNullUserDemo {
 
 Using the Sample code from Chapter 2 of *Spring in Action 5th Edition*, copy your Tacos Spring Boot project from Lag #1 into /labs/lab2/tacos-cloud, make the nessary changes from the Book and deploy the Application on go Google Cloud Kubernetes Engine.  Please note that you make skip porting over the Tests from Chapter 2.
 
-Take Screenshots showing:  
+*Take Screenshots showing:*  
 
 1. The Tacos Cloud Pod Workload
 2. The Tacos Cloud Service (show Public IP and Port)

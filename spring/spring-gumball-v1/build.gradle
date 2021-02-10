@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 sourceCompatibility = '11'
 
 configurations {
@@ -31,6 +31,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:selenium'
+	testImplementation 'org.seleniumhq.selenium:selenium-remote-driver'
+	testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver'
 }
 
 dependencyManagement {

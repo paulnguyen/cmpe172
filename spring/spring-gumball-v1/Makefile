@@ -85,6 +85,26 @@ pod-shell:
 pod-logs:
 	kubectl logs -f spring-gumball
 
+# Deployment
+
+deployment-create:
+	kubectl create -f deployment.yaml --save-config 
+
+deployment-get:
+	kubectl get deployments
+
+deployment-get-pods:
+	kubectl get pods -l name=spring-gumball
+
+deployment-pod-shell:
+	kubectl exec -it $(pod) -- /bin/bash
+
+deployment-upgrade:
+	kubectl apply  -f deployment.yaml
+
+deployment-delete:
+	kubectl delete deployment spring-gumball-deployment
+
 # Service
 
 service-create:
@@ -98,5 +118,15 @@ service-get-ip:
 
 service-delete:
 	kubectl delete service spring-gumball
+
+# Ingress
+
+ingress-apply:
+	kubectl apply -f ingress.yaml
+
+ingress-ip:
+	kubectl get ingress spring-gumball-ingress
+
+
 
 

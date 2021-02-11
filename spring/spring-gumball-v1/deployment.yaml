@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-gumball-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: spring-gumball
+  replicas: 4 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        name: spring-gumball
+    spec:
+      containers:
+      - name: spring-gumball
+        image: paulnguyen/spring-gumball:v1
+        ports:
+        - containerPort: 8080
+

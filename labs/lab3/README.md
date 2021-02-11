@@ -9,15 +9,15 @@ In this Lab, you will be buidling a Spring Gumball App, Testing it with Test Con
   
 ## Part 1 -- Spring Gumball on Docker 
 
-* Project Dependencies - Note that the proect was initialized with Spring Boot as follows:
+### Project Dependencies - Note that the proect was initialized with Spring Boot as follows:
 
 ![spring-gumball-initializr](images/spring-gumball-initializr.png)
 
-* Java State Machine for Gumball Business Logic - The starter code includes a State Machine (Java Pattern) with a JUnit Test.  The State Machine Design is as follows and the code is in the "com.example.gumballmachine" package.
+### Java State Machine for Gumball Business Logic - The starter code includes a State Machine (Java Pattern) with a JUnit Test.  The State Machine Design is as follows and the code is in the "com.example.gumballmachine" package.
 
 ![gumball-state-model](images/gumball-state-model.png)
 
-* Gumball Spring MVC Code
+### Gumball Spring MVC Code
 
 1. GumballModel.java
 
@@ -233,8 +233,9 @@ public class GumballMachineController {
 </body>
 </html>
 ```
+### Gumball Spring Docker Compose
 
-5. docker-compose.yaml
+* docker-compose.yaml
 
 The Docker Compose Spec is used to deployed a load balanced local spring gumball environment on docker.  Rules in the Makefile can be used to managed this.  Specifically, this commands brings up a load balancer and two insstances of spring gumball spring boot app:  
 
@@ -278,6 +279,109 @@ networks:
     driver: bridge
 ```
 
+### Testing with Test Containers and Selenium 
+
+The Browser Container Test makes use of Selenium Web Driver and Test Containers (in Docker).  The test code also enables VNC recording to a specific path on your local system.  It is currently pointing at "/tmp".  You will need to make the appropriate changes to make this work in your environment.
+
+Once testing is complete, Gradle generates the test results in the project's "build folder".  For example:
+
+![spring-gumball-test-results](images/spring-gumball-test-results.png)
+
+```
+package com.example.springgumball;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.By;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
+
+import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@Testcontainers
+@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+public class BrowserContainerTest {
+  
+  @LocalServerPort
+  private int port;
+ 
+  @Container
+  private BrowserWebDriverContainer container = new BrowserWebDriverContainer()
+          .withCapabilities(new ChromeOptions())
+          .withRecordingMode(RECORD_ALL, new File("/tmp") ) ;
+  
+  @Test
+  public void testGumballPageLoad() {
+
+    this.container.getWebDriver().get( "http://host.docker.internal:" + port + "/");
+
+    RemoteWebDriver driver = this.container.getWebDriver() ;
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS) ;
+
+    driver.navigate().refresh();
+
+    String titleText = driver.getTitle();
+    assertEquals("Welcome to the Gumball Machine", titleText);
+
+    String h1Text = driver.findElementByTagName("h1").getText();
+    assertEquals("Welcome to the Gumball Machine", h1Text);
+
+    String imgSrc = driver.findElementByTagName("img").getAttribute("src");
+    System.out.println( imgSrc ) ;
+    assertTrue(imgSrc.contains("giant-gumball-machine.jpg") );
+
+  }
+  
+  
+  @Test
+  public void testGumballPlaceOrder() {
+
+    this.container.getWebDriver().get( "http://host.docker.internal:" + port + "/");
+
+    RemoteWebDriver driver = this.container.getWebDriver() ;
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS) ;
+
+    driver.navigate().refresh();
+    String url = driver.getCurrentUrl() ;
+    System.out.println( url ) ;
+    driver.get(url) ;
+
+    String titleText = driver.getTitle();
+    assertEquals("Welcome to the Gumball Machine", titleText);
+
+    String h1Text = driver.findElementByTagName("h1").getText();
+    assertEquals("Welcome to the Gumball Machine", h1Text);
+
+    String imgSrc = driver.findElementByTagName("img").getAttribute("src");
+    System.out.println( imgSrc ) ;
+    assertTrue(imgSrc.contains("giant-gumball-machine.jpg") );
+
+    driver.findElement(By.id("btnInsertQuarter")).click() ;
+    String message1 = driver.findElement(By.id("pre")).getText() ;
+    System.out.println( message1 ) ;
+
+    driver.findElement(By.id("btnTurnCrank")).click() ;
+    String message2 = driver.findElement(By.id("pre")).getText() ;
+    System.out.println( message2 ) ;
+    
+
+  }
+ 
+}
+```
 
 ## Part 2 -- Spring Gumball on Google Cloud 
 
@@ -285,12 +389,32 @@ networks:
 
 # Lab Notes and References
 
+## Spring Boot Browser Testing
+
 * https://docs.spring.io/spring-boot/docs/current/reference/html
 * https://www.selenium.dev/documentation/en/webdriver/browser_manipulation
 * https://junit.org/junit5/docs/current/user-guide/#writing-tests
 * https://www.testcontainers.org/modules/webdriver_containers
 * https://github.com/testcontainers/testcontainers-java/tree/master/examples
 * https://www.javadoc.io/doc/org.seleniumhq.selenium/selenium-api/3.141.59/overview-summary.html
+
+# Docker Compose
+
+* https://docs.docker.com/compose
+* https://hub.docker.com/r/eeacms/haproxy
+* https://github.com/paulnguyen/cloud/blob/master/jumpbox/docker-jumpbox.md
+
+# GKE Concepts & Load Balancers
+
+* https://cloud.google.com/kubernetes-engine/docs/concepts/pod
+* https://cloud.google.com/kubernetes-engine/docs/concepts/deployment
+* https://cloud.google.com/kubernetes-engine/docs/concepts/service
+* https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
+* https://kubernetes.io/docs/concepts/services-networking/ingress/
+* https://cloud.google.com/kubernetes-engine/docs/concepts/ingress
+* https://cloud.google.com/kubernetes-engine/docs/concepts/ingress-xlb
+* https://cloud.google.com/kubernetes-engine/docs/concepts/ingress-ilb
+* https://cloud.google.com/kubernetes-engine/docs/concepts/container-native-load-balancing
 
 
 

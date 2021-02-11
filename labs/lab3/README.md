@@ -385,6 +385,83 @@ public class BrowserContainerTest {
 
 ## Part 2 -- Spring Gumball on Google Cloud 
 
+### GKE Configurations Manifests
+
+* deployment.yaml
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-gumball-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: spring-gumball
+  replicas: 4 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        name: spring-gumball
+    spec:
+      containers:
+      - name: spring-gumball
+        image: paulnguyen/spring-gumball:v1
+        ports:
+        - containerPort: 8080
+```
+
+* service.yaml
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-gumball-service 
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080 
+  selector:
+    name: spring-gumball
+```
+
+* ingress.yaml
+
+```
+apiVersion: "extensions/v1beta1"
+kind: "Ingress"
+metadata:
+  name: "spring-gumball-ingress"
+  namespace: "default"
+spec:
+  backend:
+    serviceName: "spring-gumball-service"
+    servicePort: 8080
+```
+
+### GCP Deployment Example Screenshots
+
+* Deployment
+
+![spring-gumball-deployment-1](images/spring-gumball-deployment-1.png)
+![spring-gumball-deployment-2](images/spring-gumball-deployment-2.png)
+
+* Service
+
+![spring-gumball-service-1](images/spring-gumball-service-1.png)
+![spring-gumball-service-2](images/spring-gumball-service-2.png)
+
+* Ingress
+
+![spring-gumball-ingress-1](images/spring-gumball-ingress-1.png)
+![spring-gumball-ingress-2](images/spring-gumball-ingress-2.png)
+
 
 
 # Lab Notes and References

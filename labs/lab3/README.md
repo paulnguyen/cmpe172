@@ -276,7 +276,7 @@ volumes:
 networks:
   network:
     driver: bridge
-``
+```
 
 
 ## Part 2 -- Spring Gumball on Google Cloud 

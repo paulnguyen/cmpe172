@@ -1,40 +1,32 @@
 # CMPE 172 - Lab #3 - Spring Gumball (Version 1)
 
-In this Lab, you will be exploring Spring MVC and Spring Testing on Docker and Google Cloud.  Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
+In this Lab, you will be buidling a Spring Gumball App, Testing it with Test Containers and Exploring Deployment on Docker and Google Cloud (GKE) with Load Balancers.  Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
 
-* In the /labs/lab2 folder, include
-  * spring-mvc
-  * spring-test
-  * spring-lombok
-  * tacos-cloud
+* In the /labs/lab3 folder, include
+  * spring-gumball  (note: use starter code here:  https://github.com/paulnguyen/cmpe172/tree/main/spring/spring-gumball-v1)
   * images (screenshots)
   * README.md (lab notes)
+  
+## Part 1 -- Spring Gumball on Docker 
 
-## Part 1 -- Spring Gumball on Docker and Google Cloud
+* Project Dependencies - Note that the proect was initialized with Spring Boot as follows:
+
+![spring-gumball-initializr](images/spring-gumball-initializr.png)
 
 
 
-## Part 2 -- Tacos Cloud App (Version 3)
+## Part 2 -- Spring Gumball on Google Cloud 
 
-Using the Sample code from Chapter 2 of *Spring in Action 5th Edition*, copy your Tacos Spring Boot project from Lag #1 into /labs/lab2/tacos-cloud, make the nessary changes from the Book and deploy the Application on go Google Cloud Kubernetes Engine.  Please note that you make skip porting over the Tests from Chapter 2.
-
-*Take Screenshots showing:*  
-
-1. The Tacos Cloud Pod Workload
-2. The Tacos Cloud Service (show Public IP and Port)
-3. Browser Showing Tacos Cloud App Running
 
 
 # Lab Notes and References
 
-* https://spring.io/projects/spring-boot
-* https://spring.io/guides
-* https://github.com/spring-guides
-* https://spring.io/guides/gs/serving-web-content
-* https://spring.io/guides/gs/testing-web
-* https://spring.io/web-applications 
-* https://docs.spring.io/spring-framework/docs/current/reference/html
-* https://docs.spring.io/spring-framework/docs/current/javadoc-api
+* https://docs.spring.io/spring-boot/docs/current/reference/html
+* https://www.selenium.dev/documentation/en/webdriver/browser_manipulation
+* https://junit.org/junit5/docs/current/user-guide/#writing-tests
+* https://www.testcontainers.org/modules/webdriver_containers
+* https://github.com/testcontainers/testcontainers-java/tree/master/examples
+* https://www.javadoc.io/doc/org.seleniumhq.selenium/selenium-api/3.141.59/overview-summary.html
 
 
 

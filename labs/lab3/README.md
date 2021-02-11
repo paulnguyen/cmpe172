@@ -234,6 +234,51 @@ public class GumballMachineController {
 </html>
 ```
 
+5. docker-compose.yaml
+
+The Docker Compose Spec is used to deployed a load balanced local spring gumball environment on docker.  Rules in the Makefile can be used to managed this.  Specifically, this commands brings up a load balancer and two insstances of spring gumball spring boot app:  
+
+* docker-compose up --scale gumball=2 -d
+
+```
+version: "3"
+
+services:
+  gumball:
+    image: spring-gumball
+    volumes:
+      - /tmp:/tmp
+    networks:
+      - network   
+    ports:
+      - 8080    
+    restart: always     
+  lb:
+    image: eeacms/haproxy
+    depends_on:
+    - gumball
+    ports:
+    - "80:5000"
+    - "1936:1936"
+    environment:
+      BACKENDS: "gumball"
+      BACKENDS_PORT: "8080"
+      DNS_ENABLED: "true"
+      COOKIES_ENABLED: "false"
+      LOG_LEVEL: "info"
+    networks:
+      - network
+
+volumes:
+  schemas:
+    external: false
+
+networks:
+  network:
+    driver: bridge
+``
+
+
 ## Part 2 -- Spring Gumball on Google Cloud 
 
 

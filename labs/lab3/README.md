@@ -13,6 +13,9 @@ In this Lab, you will be buidling a Spring Gumball App, Testing it with Test Con
 
 ![spring-gumball-initializr](images/spring-gumball-initializr.png)
 
+* Java State Machine for Gumball Business Logic - The starter code includes a State Machine (Java Pattern) with a JUnit Test.  The State Machine Design is as follows and the code is in the "com.example.gumballmachine" package.
+
+![gumball-state-model](images/gumball-state-model.png)
 
 
 ## Part 2 -- Spring Gumball on Google Cloud 

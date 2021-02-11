@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tacos-cloud
+  namespace: default
+  labels:
+    name: tacos-cloud
+spec:
+  containers:
+    - image: paulnguyen/tacos-cloud:v1
+      name: tacos-cloud
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP

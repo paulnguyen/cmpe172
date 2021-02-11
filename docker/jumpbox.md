@@ -26,19 +26,19 @@
 
 ### Create Jump Box POD
 
-	kubectl create  --namespace gumball -f jumpbox.yaml
+	kubectl create -f jumpbox.yaml
 
 ### Get Jump Box POD
 
-	kubectl get --namespace gumball pod jumpbox
+	kubectl get pod jumpbox
 
 ### Jump Box POD Shell
 
-	kubectl exec  --namespace gumball -it jumpbox -- /bin/bash
+	kubectl exec -it jumpbox -- /bin/bash
 
 ### Delete Jump Box POD
 
-	kubectl delete --namespace gumball pod jumpbox
+	kubectl delete pod jumpbox
 
 
 ## =========================

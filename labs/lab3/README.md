@@ -9,7 +9,7 @@ In this Lab, you will be buidling a Spring Gumball App, Testing it with Test Con
   
 ## Part 1 -- Spring Gumball on Docker 
 
-### Project Dependencies - Note that the proect was initialized with Spring Boot as follows:
+### Project Dependencies - Note that the project was initialized with Spring Boot as follows:
 
 ![spring-gumball-initializr](images/spring-gumball-initializr.png)
 

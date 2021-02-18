@@ -508,6 +508,239 @@ Now you need to create the login page. There is already a view controller for th
 This Thymeleaf template presents a form that captures a username and password and posts them to /login. As configured, Spring Security provides a filter that intercepts that request and authenticates the user. If the user fails to authenticate, the page is redirected to /login?error, and your page displays the appropriate error message. Upon successfully signing out, your application is sent to /login?logout, and your page displays the appropriate success message.
 
 
+
+## Spring Gumball (Version 2)
+
+* Starter Code:  https://github.com/paulnguyen/cmpe172/tree/main/spring/spring-gumball-v2
+
+1. Start with the initial code for Spring Gumball (Version 2).  Note that the code has the following changes (from Version 1):
+
+### Gumball State Machine Business Logic has been refactored to remove inventory management.
+
+* GumballMachine.java
+
+```
+public class GumballMachine {
+ 
+  State soldOutState;
+  State noQuarterState;
+  State hasQuarterState;
+  State soldState;
+
+  State state = noQuarterState ;
+ 
+  public GumballMachine() {
+    soldOutState = new SoldOutState(this);
+    noQuarterState = new NoQuarterState(this);
+    hasQuarterState = new HasQuarterState(this);
+    soldState = new SoldState(this);
+    state = noQuarterState ;
+  }
+ 
+  public void insertQuarter() {
+    state.insertQuarter();
+  }
+ 
+  public void ejectQuarter() {
+    state.ejectQuarter();
+  }
+ 
+  public void turnCrank() {
+    state.turnCrank();
+    state.dispense();
+  }
+
+  void setState(State state) {
+    this.state = state;
+  }
+ 
+  void releaseBall() {
+    System.out.println("A gumball comes rolling out the slot...");
+  }
+ 
+  void refill(int count) {
+    state = noQuarterState;
+  }
+
+    public State getState() {
+        return state;
+    }
+
+    public State getSoldOutState() {
+        return soldOutState;
+    }
+
+    public State getNoQuarterState() {
+        return noQuarterState;
+    }
+
+    public State getHasQuarterState() {
+        return hasQuarterState;
+    }
+
+    public State getSoldState() {
+        return soldState;
+    }
+ 
+  public String toString() {
+    StringBuffer result = new StringBuffer();
+    result.append("Mighty Gumball, Inc.");
+    result.append("\nSpring Boot Standing Gumball Model #2021");
+    result.append("\n\n");
+    result.append("\nMachine is " + state + "\n");
+    return result.toString();
+  }
+}
+```
+
+
+### Gumball View Template has been modified to add "Hidden Form Fields" for Cookie-Less Tracking purposes.
+
+* gumball.html
+
+```
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+<html>
+<head>
+    <title>Welcome to the Gumball Machine</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+<h1 align="center">Welcome to the Gumball Machine</h1>
+
+<!-- FORM SECTION -->
+<form name="form" th:object="${command}" method="post" action="">
+
+  <input type="hidden" name="state" id="state" th:field="*{state}" />
+  <input type="hidden" name="ts" id="ts" th:field="*{timestamp}" />
+  <input type="hidden" name="hash" id="hash" th:field="*{hash}" />
+
+    <p>
+    <table id="msg" align="center" style="width:40%">
+      <tr>
+        <td>
+          <pre id="pre">
+          <span th:text="${message}" />
+          </pre>
+        </td>
+      </tr>
+    </table>
+    </p>
+    <p align="center"> <img th:src="@{/images/giant-gumball-machine.jpg}" width="385" height="316"/></p>
+    <br/>
+    <p align="center">
+        Special Instructions:  <input type="text" id="message" th:field="*{message}"/>
+        <br/>
+        <br/>
+        <br/>
+        <input type="submit" name="action" id="btnInsertQuarter" value="Insert Quarter">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" name="action" id="btnTurnCrank" value="Turn Crank">
+    </p>
+</form>
+<!-- END FORM SECTION -->
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<table align="center" style="width:100%" >
+<tr>
+  <td style="text-align: left;" >
+    <pre>Session ID:  <span th:text="${session}" /></pre>
+  </td>
+  <td style="text-align: right;" >
+    <pre>Server Host/IP:  <span th:text="${server}" /></pre>
+  </td>  
+</tr>
+</table>
+
+</body>
+</html>
+```
+
+
+### Gumball Command Model has been updated to include Tracking Fields
+
+* GumballCommand.java
+
+```
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@RequiredArgsConstructor
+class GumballCommand {
+
+    private String action ;
+    private String message ;
+    private String state ;
+    private String timestamp ;
+    private String hash ;
+    
+}
+```
+
+### Make Changes to the Gumball to remove the need for Sessions.
+
+![spring-gumball-v2](images/spring-gumball-v2.png)
+
+* Hint: HMAC Hash Example below.
+
+```
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64.Encoder;
+
+class HMACTester {
+
+  private static String key = "kwRg54x2Go9iEdl49jFENRM12Mp711QI" ;
+  private static String message1 = "Hello World!" ;
+  private static String message2 = "Goodby World!" ;
+
+  public static void main(String[] args) {
+
+    byte[] hash1 = hmac_sha256( key, message1 ) ;
+    byte[] hash2 = hmac_sha256( key, message2 ) ;
+
+    java.util.Base64.Encoder encoder = java.util.Base64.getEncoder() ;
+
+    System.out.println ( "MSG1: " + message1 ) ;
+    System.out.println ( "HASH2: " + encoder.encodeToString(hash1) )  ;
+
+    System.out.println ( "MSG2: " + message2 ) ;
+    System.out.println ( "HASH2: " + encoder.encodeToString(hash2) )  ;
+
+  }
+
+  private static byte[] hmac_sha256(String secretKey, String data) {
+    try {
+      Mac mac = Mac.getInstance("HmacSHA256") ;
+      SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256") ;
+      mac.init(secretKeySpec) ;
+      byte[] digest = mac.doFinal(data.getBytes()) ;
+      return digest ;
+    } catch (InvalidKeyException e1) {
+      throw new RuntimeException("Invalid key exception while converting to HMAC SHA256") ;
+    } catch (NoSuchAlgorithmException e2) {
+      throw new RuntimeException("Java Exception Initializing HMAC Crypto Algorithm") ;
+    }
+  }
+
+}
+```
+
+
 # References
 
 * https://cloud.google.com/load-balancing/docs/ssl-certificates/google-managed-certs

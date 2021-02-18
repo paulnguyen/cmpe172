@@ -35,9 +35,10 @@ In this Lab, you will be exploring Spring Security and Testing them locally on y
         Spring LDAP
         Embedded LDAP Server
 ```
+![spring-ldap-initializr](images/spring-ldap-initializr.png)
+
 
 2. Create a Simple Web Controller
-
 
 * HomeController.java
 
@@ -352,6 +353,8 @@ test {
         Spring Security
         Thymeleaf
 ```
+![spring-security-initializr](images/spring-security-initializr.png)
+
 
 2. Create HTML Views
 

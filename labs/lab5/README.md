@@ -36,6 +36,8 @@ In this Lab, you will be exploring Spring Data and Testing them locally on your 
         Spring LDAP
  ```
 
+![spring-jdbc-initializr](images/spring-jdbc-initializr.png)
+
 2. Create a Customer Object
 
 * Customer.java
@@ -151,6 +153,8 @@ public class SpringJdbcApplication implements CommandLineRunner {
         Spring Data JPA
         MySQL Driver
  ```
+
+![spring-mysql-initializr](images/spring-mysql-initializr.png)
 
 2. Create a MySQL Database
 

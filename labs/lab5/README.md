@@ -130,6 +130,9 @@ public class SpringJdbcApplication implements CommandLineRunner {
 }
 ```
 
+* Sample Output
+
+![spring-jdbc-output](images/spring-jdbc-output.png)
 
 # Spring MySQL
 

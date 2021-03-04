@@ -1,9 +1,11 @@
 
-# LAB #5 NOTES
+# CMPE 172 - Lab #5 - Spring Data 
 
 * Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab5
 
-In this Lab, you will be exploring Spring Data and Testing them locally on your machine.  In addition, you will be updating Spring Gumballl (to Version 3) and deploying it to Google Cloud (GKE).  Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
+In this Lab, you will be exploring Spring Data and Testing them locally on your machine.  In addition, you will be updating Spring Gumballl (to Version 3) and deploying it to Google Cloud (GKE).  
+
+Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
 
 * In the /labs/lab5 folder, include
   * spring-gumball-v3 

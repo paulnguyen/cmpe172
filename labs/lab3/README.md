@@ -1,6 +1,8 @@
 # CMPE 172 - Lab #3 - Spring Gumball (Version 1)
 
-In this Lab, you will be buidling a Spring Gumball App, Testing it with Test Containers and Exploring Deployment on Docker and Google Cloud (GKE) with Load Balancers.  Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
+In this Lab, you will be buidling a Spring Gumball App, Testing it with Test Containers and Exploring Deployment on Docker and Google Cloud (GKE) with Load Balancers.  
+
+Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
 
 * In the /labs/lab3 folder, include
   * spring-gumball  (note: use starter code here:  https://github.com/paulnguyen/cmpe172/tree/main/spring/spring-gumball-v1)

@@ -95,7 +95,7 @@ Build and Run the provided Starbucks API in Go.  See Demo in class on how to set
 
 ![insomnia-project](images/insomnia-project.png)
 
-The API Specification is as follows.  Port this API into Spring REST and MySQL JPA and commit your work in a folder named:  spring-starbucks-api.  Test your API using Insomnia or Postman (modify the Insomnia/Postman as needed).
+The API Specification is as follows.  Port this API into Spring REST and H2 Database JPA and commit your work in a folder named:  spring-starbucks-api.  Test your API using Insomnia or Postman (modify the Insomnia/Postman as needed).
 
 The Starbucks API Specification is as follows:
 

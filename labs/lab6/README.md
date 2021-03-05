@@ -219,7 +219,7 @@ In future Labs, you will have to modify these Apps to work with your Spring Star
 
 ![2-starbucks-register-place-order](images/2-starbucks-register-place-order.png)
 
-* Alternatively, run via DOcker Image: paulnguyen/starbucks-nodejs:v1.0
+* Alternatively, run via Docker Image: paulnguyen/starbucks-nodejs:v1.0
 
 ```
 docker run --network starbucks --name starbucks-nodejs -p 8080:8080  -e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0

@@ -1,0 +1,36 @@
+
+version: "3"
+
+services:
+  gumball:
+    image: spring-gumball
+    volumes:
+      - /tmp:/tmp
+    networks:
+      - network   
+    ports:
+      - 8080    
+    restart: always     
+  lb:
+    image: eeacms/haproxy
+    depends_on:
+    - gumball
+    ports:
+    - "80:5000"
+    - "1936:1936"
+    environment:
+      BACKENDS: "gumball"
+      BACKENDS_PORT: "8080"
+      DNS_ENABLED: "true"
+      COOKIES_ENABLED: "false"
+      LOG_LEVEL: "info"
+    networks:
+      - network
+
+volumes:
+  schemas:
+    external: false
+
+networks:
+  network:
+    driver: bridge

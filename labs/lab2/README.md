@@ -1,6 +1,8 @@
 # CMPE 172 - Lab #2 - Spring MVC
 
-In this Lab, you will be exploring Spring MVC and Spring Testing on Docker and Google Cloud.  Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
+In this Lab, you will be exploring Spring MVC and Spring Testing on Docker and Google Cloud.  
+
+Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
 
 * In the /labs/lab2 folder, include
   * spring-mvc

@@ -1,0 +1,47 @@
+
+version: "3.5"
+
+services:
+
+  gumball:
+    image: paulnguyen/spring-gumball:v1
+    volumes:
+      - /tmp:/tmp
+    networks:
+      - network   
+    ports:
+      - 8080    
+    restart: always   
+
+  proxy:
+    image: haproxy:latest
+    depends_on:
+    - gumball
+    restart: always
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy:ro
+      - ./certs:/usr/local/etc/certs:ro
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - network
+
+  nginx-certbot:
+    image: nginx
+    restart: always
+    container_name: nginx-certbot
+    volumes:
+      - ./webroot:/usr/share/nginx/html 
+    networks:
+      - network
+
+volumes:
+  schemas:
+    external: false
+
+networks:
+  network:
+    driver: bridge
+
+

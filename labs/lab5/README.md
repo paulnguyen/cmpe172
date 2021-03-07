@@ -469,17 +469,23 @@ where not exists
 ## 8. Display names (first and last) along with awards and contributions from BIOS with 1 Contribution AND 2 Awards
 
 ```
-select p.first_name, p.last_name
-from person p
-where (select count(*) from contribs c where c.person_id = p.person_id) = 1
+select p.first_name, p.last_name, c.contribution, a.award_name
+from person p, person_awards pa, awards a, contribs c
+where p.person_id = c.person_id
+and p.person_id = pa.person_id
+and pa.award_id = a.award_id
+and  (select count(*) from contribs c where c.person_id = p.person_id) = 1
 and (select count(*) from person_awards pa where pa.person_id = p.person_id) = 2
 ```
 
 ## 9. Display names (first and last) along with awards and contributions from BIOS with 1 Contributions OR 2 Awards
 
 ```
-select p.first_name, p.last_name
+select p.first_name, p.last_name, c.contribution, a.award_name
 from person p
+left join contribs c using (person_id)
+left join person_awards pa using (person_id)
+left join awards a using (award_id)
 where (select count(*) from contribs c where c.person_id = p.person_id) = 1
 or (select count(*) from person_awards pa where pa.person_id = p.person_id) = 2
 ```
@@ -514,8 +520,104 @@ class GumballModel {
 Change the Gumball Controller to update the Gumball Inventory in the DB and also update the HTML view to display the Model Number and Serial Number fetched from the DB.
 
 
+## Hints on Running Spring Gumball with MySQL in Docker Containers
+
+* Sample application.properties file:
+
+```
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/cmpe172
+spring.datasource.username=root
+spring.datasource.password=cmpe172
+```
+
+* Note that in your application.properties file, the data source connection defaults to "localhost" if there is no setting for MYSQL_HOST environment variablle.  This works when MySQL is running on your local machine, or is published via your Local Docker on the standard port 3306 when you run:
+
+```
+docker run -d --name mysql -td -p 3306:3306 -e MYSQL_ROOT_PASSWORD=cmpe172 mysql:8.0
+```
+
+* Unfortunately, this will not work when your Spring Gumball App runs inside docker.  This is because each Docker Container is isolated like a "Virtual Machine" from other Containers.  Thus, you must reference the MySQL's HOST Name or IP from the Spring Gumball Container in order to connect to the Database.  Connection to "localhost" from Spring Gumball will not work since there's no MySQL DB running on the same "VM" as the Spring Gumball Container.
+
+* Use the following Docker Run command to start your MySQL Container in an isolated Network named "gumball". Note: create the network if it doesn't exist yet.
+
+```
+docker network create --driver bridge gumball
+docker run -d --network gumball --name mysql -td -p 3306:3306 -e MYSQL_ROOT_PASSWORD=cmpe172 mysql:8.0
+```
+
+
+* Then, run the Spring Gumball App in Docker on the same "gumball" network passing in an environment setting to thell Spring JPA to connect to MySQL via the hostname "mysql".  The "hostname" for a container is the name it was launched with.
+
+```
+docker run --network gumball -e "MYSQL_HOST=mysql" --name spring-gumball -td -p 8080:8080 spring-gumball  
+```
+
+* For Docker Compose, you can use the following Manifest.  
+
+```
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - /tmp:/tmp
+    networks:
+      - network   
+    ports:
+      - 3306    
+    networks:
+      - network
+    environment:
+      MYSQL_ROOT_PASSWORD: "cmpe172"
+    restart: always     
+  gumball:
+    image: spring-gumball
+    depends_on:
+    - mysql    
+    volumes:
+      - /tmp:/tmp
+    networks:
+      - network   
+    ports:
+      - 8080    
+    environment:
+      MYSQL_HOST: "mysql"
+    restart: always     
+  lb:
+    image: eeacms/haproxy
+    depends_on:
+    - gumball
+    ports:
+    - "80:5000"
+    - "1936:1936"
+    environment:
+      BACKENDS: "gumball"
+      BACKENDS_PORT: "8080"
+      DNS_ENABLED: "true"
+      COOKIES_ENABLED: "false"
+      LOG_LEVEL: "info"
+    networks:
+      - network
+
+volumes:
+  schemas:
+    external: false
+
+networks:
+  network:
+    driver: bridge
+```
+
 
 # References
+
+## Docker Networking
+
+* https://docs.docker.com/config/containers/container-networking/
+* https://docs.docker.com/network/network-tutorial-standalone/
+* https://docs.docker.com/network/bridge/
 
 ## MySQL:
 
@@ -555,6 +657,9 @@ Change the Gumball Controller to update the Gumball Inventory in the DB and also
 * Redis Tutorial:  https://www.tutorialspoint.com/redis/index.htm
 * Google Memorystore:  https://cloud.google.com/memorystore
   - Supported Versions:  3.2, 4.0, 5.0
+
+
+
 
 
 

@@ -1,662 +1,273 @@
 
-# CMPE 172 - Lab #5 - Spring Data 
+# LAB #6 NOTES
 
-* Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab5
+* Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab6
 
-In this Lab, you will be exploring Spring Data and Testing them locally on your machine.  In addition, you will be updating Spring Gumballl (to Version 3) and deploying it to Google Cloud (GKE).  
+In this Lab, you will be exploring Spring REST APIs and porting a Starbucks REST API written in Go to Java Spring.  In addition, you will be deploying your Starbucks API to Google Cloud (GKE).  
 
 Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu organization.  Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).  
 
-* In the /labs/lab5 folder, include
-  * spring-gumball-v3 
-  * spring-jdbc
-  * spring-mysql
+* In the /labs/lab6 folder, include
+  * spring-rest
+  * spring-starbucks-api
+  * insomnia-project.json
+  * postman-collection.json
   * images (screenshots)
   * README.md (lab notes)
-  * mongo-queries.md
 
 
-# Spring JDBC
+# Building REST services with Spring
 
-* https://spring.io/guides/gs/relational-data-access/
-* https://github.com/spring-guides/gs-relational-data-access
+* https://spring.io/guides/tutorials/rest
+* https://docs.spring.io/spring-hateoas/docs/1.2.4/api
+* https://github.com/spring-projects/spring-hateoas-examples
 
+Follow the Tutorial from Spring Guides at https://spring.io/guides/tutorials/rest/.  As you build the REST API in the example, test the API using CURL as well as with an API Development Tool -- Postman (https://www.postman.com/).  
 
-1. Start a Spring Initializr Project
+All work for this Turtorial will be done locally.  There is no requirement for deployment to Google Cloud.
 
-```
-    Project: Gradle Project
-    Language: Java Language (JDK 11)
-    Spring Boot Version: 2.4.3
-    Group: com.example
-    Artifact: spring-jdbc
-    Name: spring-jdbc
-    Package Name: come.example.spring-jdbc
-    Packaging: Jar
-    Dependencies:
-        Spring Web
-        Spring LDAP
- ```
-
-![spring-jdbc-initializr](images/spring-jdbc-initializr.png)
-
-2. Create a Customer Object
-
-* Customer.java
-
-The simple data access logic you will work with manages the first and last names of customers. To represent this data at the application level, create a Customer class.
-
-```
-public class Customer {
-  private long id;
-  private String firstName, lastName;
-
-  public Customer(long id, String firstName, String lastName) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
-
-  @Override
-  public String toString() {
-    return String.format(
-        "Customer[id=%d, firstName='%s', lastName='%s']",
-        id, firstName, lastName);
-  }
-
-  // getters & setters omitted for brevity
-}
-```
-
-3. Store and Retrieve Data
-
-Spring provides a template class called JdbcTemplate that makes it easy to work with SQL relational databases and JDBC. Most JDBC code is mired in resource acquisition, connection management, exception handling, and general error checking that is wholly unrelated to what the code is meant to achieve. The JdbcTemplate takes care of all of that for you. All you have to do is focus on the task at hand.
-
-* SpringJdbcApplication.java
-
-```
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-@SpringBootApplication
-public class SpringJdbcApplication implements CommandLineRunner {
-
-  private static final Logger log = LoggerFactory.getLogger(SpringJdbcApplication.class);
-
-  public static void main(String args[]) {
-    SpringApplication.run(SpringJdbcApplication.class, args);
-  }
-
-  @Autowired
-  JdbcTemplate jdbcTemplate;
-
-  @Override
-  public void run(String... strings) throws Exception {
-
-    log.info("Creating tables");
-
-    jdbcTemplate.execute("DROP TABLE customers IF EXISTS");
-    jdbcTemplate.execute("CREATE TABLE customers(" +
-        "id SERIAL, first_name VARCHAR(255), last_name VARCHAR(255))");
-
-    // Split up the array of whole names into an array of first/last names
-    List<Object[]> splitUpNames = Arrays.asList("John Woo", "Jeff Dean", "Josh Bloch", "Josh Long").stream()
-        .map(name -> name.split(" "))
-        .collect(Collectors.toList());
-
-    // Use a Java 8 stream to print out each tuple of the list
-    splitUpNames.forEach(name -> log.info(String.format("Inserting customer record for %s %s", name[0], name[1])));
-
-    // Uses JdbcTemplate's batchUpdate operation to bulk load data
-    jdbcTemplate.batchUpdate("INSERT INTO customers(first_name, last_name) VALUES (?,?)", splitUpNames);
-
-    log.info("Querying for customer records where first_name = 'Josh':");
-    jdbcTemplate.query(
-        "SELECT id, first_name, last_name FROM customers WHERE first_name = ?", new Object[] { "Josh" },
-        (rs, rowNum) -> new Customer(rs.getLong("id"), rs.getString("first_name"), rs.getString("last_name"))
-    ).forEach(customer -> log.info(customer.toString()));
-  }
-}
-```
-
-* Sample Output
-
-![spring-jdbc-output](images/spring-jdbc-output.png)
-
-# Spring MySQL
-
-* https://spring.io/guides/gs/accessing-data-mysql
-* https://github.com/spring-guides/gs-accessing-data-mysql
-
-
-1. Start a Spring Initializr Project
+## Spring Initializr
 
 ```
     Project: Gradle Project
     Language: Java Language (JDK 11)
     Spring Boot Version: 2.4.3
     Group: com.example
-    Artifact: spring-mysql
-    Name: spring-mysql
-    Package Name: come.example.spring-mysql
+    Artifact: spring-rest
+    Name: spring-rest
+    Package Name: come.example.spring-rest
     Packaging: Jar
     Dependencies:
         Spring Web
         Spring Data JPA
-        MySQL Driver
+        Spring HATEOAS
+        H2 Database
  ```
 
-![spring-mysql-initializr](images/spring-mysql-initializr.png)
+![spring-jdbc-initializr](images/spring-rest-initializr.png)
 
-2. Create a MySQL Database
 
-* Run on Docker
+Take notes on your work to record your progress and any issues you encounter and how you resolved them.
 
-Note:  DB root password is cmpe172.
+HINTS:
 
-This connects to MySQL as root and allows access to the user from all hosts. This is not the recommended way for a production server. 
-
-```
-docker run -d --name mysql -td -p 3306:3306 -e MYSQL_ROOT_PASSWORD=cmpe172 mysql:8.0
-```
-
-* Docker command to access MySQL Container:
+* If you run into any compilation errors, here are the Imports you will need in the Controllers.
+* For other classes, not all of the imports below are needed.  Refer to appropriate Java Doc.
 
 ```
-docker exec -it mysql bash
-mysql --password
-```
-
-* Create Database
-
-To create a new database, run the following commands at the mysql prompt:
-
-```
-mysql> create database db_example; -- Creates the new database
-mysql> create user 'springuser'@'%' identified by 'ThePassword'; -- Creates the user
-mysql> grant all on db_example.* to 'springuser'@'%'; -- Gives all privileges to the new user on the newly created database
-```
-
-3. Create the application.properties File
-
-Spring Boot gives you defaults on all things. For example, the default database is H2. Consequently, when you want to use any other database, you must define the connection attributes in the application.properties file.
-
-Create a resource file called src/main/resources/application.properties, as the following listing shows:
-
-* application.properties
-
-```
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
-spring.datasource.username=springuser
-spring.datasource.password=ThePassword
-```
-
-Here, spring.jpa.hibernate.ddl-auto can be none, update, create, or create-drop. See the Hibernate documentation for details.
-
-    none: The default for MySQL. No change is made to the database structure.
-
-    update: Hibernate changes the database according to the given entity structures.
-
-    create: Creates the database every time but does not drop it on close.
-
-    create-drop: Creates the database and drops it when SessionFactory closes.
-
-You must begin with either create or update, because you do not yet have the database structure. After the first run, you can switch it to update or none, according to program requirements. Use update when you want to make some change to the database structure.
-
-The default for H2 and other embedded databases is create-drop. For other databases, such as MySQL, the default is none.
-
-```
-It is a good security practice to, after your database is in a production state, set this to none, revoke all privileges from the MySQL user connected to the Spring application, and give the MySQL user only SELECT, UPDATE, INSERT, and DELETE.
-```
-
-4. Create the @Entity Model
-
-Hibernate automatically translates the entity into a table.
-
-* User.java
-
-```
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity // This tells Hibernate to make a table out of this class
-public class User {
-  @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
-  private Integer id;
-
-  private String name;
-
-  private String email;
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-}
-```
-
-
-5. Create the Repository
-
-* UserRepository.java
-
-You need to create the repository that holds user records.  Spring automatically implements this repository interface in a bean that has the same name (with a change in the case — it is called userRepository).
-
-```
-import org.springframework.data.repository.CrudRepository;
-
-import com.example.accessingdatamysql.User;
-
-// This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
-// CRUD refers Create, Read, Update, Delete
-
-public interface UserRepository extends CrudRepository<User, Integer> {
-
-}
-```
-
-6. Create a Controller
-
-* MainController.java
-
-```
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
-@Controller // This means that this class is a Controller
-@RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
-public class MainController {
-  @Autowired // This means to get the bean called userRepository
-         // Which is auto-generated by Spring, we will use it to handle the data
-  private UserRepository userRepository;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Links;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.mediatype.problem.Problem;
 
-  @PostMapping(path="/add") // Map ONLY POST Requests
-  public @ResponseBody String addNewUser (@RequestParam String name
-      , @RequestParam String email) {
-    // @ResponseBody means the returned String is the response, not a view name
-    // @RequestParam means it is a parameter from the GET or POST request
-
-    User n = new User();
-    n.setName(name);
-    n.setEmail(email);
-    userRepository.save(n);
-    return "Saved";
-  }
-
-  @GetMapping(path="/all")
-  public @ResponseBody Iterable<User> getAllUsers() {
-    // This returns a JSON or XML with the users
-    return userRepository.findAll();
-  }
-}
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 ```
 
-7. Test the Application
+Test your REST API using the Postman Collection provided.
 
-Now that the application is running, you can test it by using curl or some similar tool. You have two HTTP endpoints that you can test:
+![postman-collection](images/postman-collection.png)
 
-GET localhost:8080/demo/all: Gets all data. 
-POST localhost:8080/demo/add: Adds one user to the data.
 
-* Add User:  
+# Starbucks End-to-End Example
 
-```
-curl localhost:8080/demo/add -d name=First -d email=someemail@someemailprovider.com
-```
 
-* Show All Users:
+## Porting the REST API to Spring
 
-```
-curl 'localhost:8080/demo/all'
-```
+Build and Run the provided Starbucks API in Go.  See Demo in class on how to setup, build and run a Go Application.  Then test the Starbucks API, use the provided Insomnia Project.  Note:  Your implementation just needs to be a Level-2 (CRUD) Rest API -- that is, Hypermedia (Level-2 / HATEOAS).
 
-8. Make Some Security Changes
+![insomnia-project](images/insomnia-project.png)
 
-When you are on a production environment, you may be exposed to SQL injection attacks. A hacker may inject DROP TABLE or any other destructive SQL commands. So, as a security practice, you should make some changes to your database before you expose the application to your users.
+The API Specification is as follows.  Port this API into Spring REST and H2 Database JPA and commit your work in a folder named:  spring-starbucks-api.  Test your API using Insomnia or Postman (modify the Insomnia/Postman as needed).
 
-The following command revokes all the privileges from the user associated with the Spring application:
+The Starbucks API Specification is as follows:
 
 ```
-mysql> revoke all on db_example.* from 'springuser'@'%';
+GET 	/ping
+		Ping Health Check.
+
+GET 	/cards 
+		Get a list of Starbucks Cards (along with balances).
+
+		[
+		  {
+		    "CardNumber": "498498082",
+		    "CardCode": "425",
+		    "Balance": 20.00
+		  },
+		  {
+		    "CardNumber": "627131848",
+		    "CardCode": "547",
+		    "Balance": 20.00
+		  }
+		]		
+
+POST 	/cards
+		Create a new Starbucks Card.
+
+		{
+		  "CardNumber": "627131848",
+		  "CardCode": "547",
+		  "Balance": 20.00
+		}
+
+GET 	/cards/{num}
+		Get the details of a specific Starbucks Card.
+
+		{
+		  "CardNumber": "627131848",
+		  "CardCode": "547",
+		  "Balance": 20.00
+		}		
+
+GET 	/card/{num}/{code}
+		Validate Card 
+
+		{
+		  "CardNumber": "627131848",
+		  "CardCode": "547",
+		  "Balance": 20.00
+		}	
+
+POST    /order/register/{regid}
+        Create a new order. Set order as "active" for register.
+
+	    {
+	      "Drink": "Latte",
+	      "Milk":  "Whole",
+	      "Size":  "Grande"
+	    }         
+
+GET     /order/register/{regid}
+        Request the current state of the "active" Order.
+
+DELETE  /order/register/{regid}
+        Clear the "active" Order.
+
+POST    /order/register/{regid}/pay/{cardnum}
+        Process payment for the "active" Order. 
+
+GET     /orders
+        Get a list of all active orders (for all registers)
+
+DELETE 	/cards
+		Delete all Cards (Use for Unit Testing Teardown)
+
+DELETE 	/orders
+		Delete all Orders (Use for Unit Testing Teardown)
 ```
 
-Now the Spring application cannot do anything in the database.
+## Explore the Sample Node.js and Java Mobile App Simulator (Optional)
 
-The application must have some privileges, so use the following command to grant the minimum privileges the application needs:
+This section is not required, but is a "preview" to the next Lab (Lab #6).  There are REST Client Sample Apps in starbucks-app and starbucks-nodejs.  Run these Apps against the Starbucks Go API and explore how they work.
 
-```
-mysql> grant select, insert, delete, update on db_example.* to 'springuser'@'%';
-```
-
-Removing all privileges and granting some privileges gives your Spring application the privileges necessary to make changes to only the data of the database and not the structure (schema).
-
-When you want to make changes to the database:
-
-    Regrant permissions.
-
-    Change the spring.jpa.hibernate.ddl-auto to update.
-
-    Re-run your applications.
-
-Then repeat the two commands shown here to make your application safe for production use again. Better still, use a dedicated migration tool, such as Flyway or Liquibase.
+In future Labs, you will have to modify these Apps to work with your Spring Starbucks API.
 
 
-# Setting Up MySQL and MongoDB
+### Example Workflow
 
-Create a "cmpe172" database in MySQL and Mongo.  Use the provided Docker commands to launch a local version of MySQL and MongoDB.  You may use commad line query interfaces for this part of the lab or use a GUI like MySQL Workbench and Robo 3T (for MongoDB).
+1. Run Starbucks API (Compile and run in Go)
 
-* MySQL
+* Note: To run Go API App, use GO version: 1.11 (code doesn't support modules yet)
 
-Create DB Schema (DDL) and Load BIOS data using:
+* Build and Run API locally (see Makefile Rules)
 
 ```
-bios-schema.sql
-bios-data.sql
+	> go version
+	go version go1.11.1 darwin/amd64
+	> set GOPATH to working dir
+	export GOPATH=$(pwd);export PATH=$PATH:$GOPATH/bin;echo $GOPATH
+	> go build starbucks
+	> ./starbucks
 ```
 
-* MongoDB
-
-Create DB Schema (DDL) and Load BIOS data using:
+* Alternatively, run via Docker Image:  paulnguyen/starbucks-api:v1.0
 
 ```
-bios.js
+	docker network create --driver bridge starbucks
+	docker run --network starbucks --name starbucks-api -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
 ```
 
+2. Starbucks App (Mobile App Simulator)
 
-# SQL vs MongoDB
+* Requires Gradle 4.9 and Java JDK 8
+* Launch and Login with PIN: 1234 
+* See starbuccks-app.xlsx 
 
-Provide the MongoDB equivalent Queries for the following MySQL SQL Queries using the BIOS data.
-Save your solution to GitHub in the file:  mongo-queries.md.
+![1-starbucks-app](images/1-starbucks-app.png)
 
+3. Placing an Order on the Starbucks Cash Register (Node.js App)
 
-## 1 - Count of Records/Documents
+* Note: To run Node.js App, use Node.js version: v8.15.0
 
-```
-select count(*) from person
-```
-  
-## 2 - Find Bios with Birth Date before 1950
+![2-starbucks-register-place-order](images/2-starbucks-register-place-order.png)
 
-```
-select first_name, last_name, birth_date 
-from person
-where birth_date < date('1950-01-01')
-```
-  
-## 3 - Get a Unique Listing of all the Awards (in DB/Collection) granted
+* Alternatively, run via Docker Image: paulnguyen/starbucks-nodejs:v1.0
 
 ```
-select distinct(a.award_name)
-from person_awards pa, awards a
-where pa.award_id = a.award_id
+docker run --network starbucks --name starbucks-nodejs -p 8080:8080  -e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0
 ```
 
-## 4 - Get a Sorted Listing of all the First Names (ascending order)
-  
-```
-select first_name
-from person
-order by 1
-```
-  
-## 5 - Get a Sorted Listing of all the First Names (descending order)
+4. Paying on the Starbucks App
 
-```
-select first_name
-from person
-order by 1 desc
-```
+![4-starbucks-app-pay](images/4-starbucks-app-pay.png)
 
-## 6 - Count the number of BIOS that don't yet have an award  
+5. See Balance on Starbucks Card after Payment
 
-```
-select count(*) from person p
-where not exists 
-    (select 1 from person_awards 
-     where person_id = p.person_id)
-```
+![5-starbucks-app-paid-balance](images/5-starbucks-app-paid-balance.png)
 
-## 7 - Display the System ID (Primary Key) for the BIO in Query #6
+6. Check Starbucks Cash Register for Successful Payment (Node.js App)
 
-```
-select p.person_id from person p
-where not exists 
-  (select 1 from person_awards 
-   where person_id = p.person_id)
-```
+![6-starbucks-register-paid-for-order](images/6-starbucks-register-paid-for-order.png)
 
-## 8. Display names (first and last) along with awards and contributions from BIOS with 1 Contribution AND 2 Awards
+7. Sample REST API Calls from Insomnia (List Cards)
 
-```
-select p.first_name, p.last_name, c.contribution, a.award_name
-from person p, person_awards pa, awards a, contribs c
-where p.person_id = c.person_id
-and p.person_id = pa.person_id
-and pa.award_id = a.award_id
-and  (select count(*) from contribs c where c.person_id = p.person_id) = 1
-and (select count(*) from person_awards pa where pa.person_id = p.person_id) = 2
-```
+![7-rest-api-cardsp](images/7-rest-api-cards.png)
 
-## 9. Display names (first and last) along with awards and contributions from BIOS with 1 Contributions OR 2 Awards
+8. Sample REST API Calls from Insomnia (List Orders)
 
-```
-select p.first_name, p.last_name, c.contribution, a.award_name
-from person p
-left join contribs c using (person_id)
-left join person_awards pa using (person_id)
-left join awards a using (award_id)
-where (select count(*) from contribs c where c.person_id = p.person_id) = 1
-or (select count(*) from person_awards pa where pa.person_id = p.person_id) = 2
-```
+![8-rest-api-orders](images/8-rest-api-orders.png)
 
-## 10 - List all the Awards for a BIO
-
-```
-select p.first_name, p.last_name, a.award_name
-from awards a, person_awards pa, person p
-where a.award_id = pa.award_id
-and p.person_id = pa.person_id
-and p.person_id = 1
-```
-
-
-# Spring Gumball (Version 3)
-
-Create a "Version 3" of your Spring Gumball (based on your implementation of Version 2 from the last lab).  In Version 3, add "Spring JPA with MySQL" and map Spring Gumball Domain Object to MySQL.
-
-Make the "serialNumber" unique in the Database and pre-configure your Spring Java code to look for a specific Serial Number in the DB based on a Static String of Configuration.
-
-```
-class GumballModel {
-
-    private String modelNumber ;
-    private String serialNumber ;
-    private Integer countGumballs ;
-    
-}
-```
-
-Change the Gumball Controller to update the Gumball Inventory in the DB and also update the HTML view to display the Model Number and Serial Number fetched from the DB.
-
-
-## Hints on Running Spring Gumball with MySQL in Docker Containers
-
-* Sample application.properties file:
-
-```
-spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/cmpe172
-spring.datasource.username=root
-spring.datasource.password=cmpe172
-```
-
-* Note that in your application.properties file, the data source connection defaults to "localhost" if there is no setting for MYSQL_HOST environment variablle.  This works when MySQL is running on your local machine, or is published via your Local Docker on the standard port 3306 when you run:
-
-```
-docker run -d --name mysql -td -p 3306:3306 -e MYSQL_ROOT_PASSWORD=cmpe172 mysql:8.0
-```
-
-* Unfortunately, this will not work when your Spring Gumball App runs inside docker.  This is because each Docker Container is isolated like a "Virtual Machine" from other Containers.  Thus, you must reference the MySQL's HOST Name or IP from the Spring Gumball Container in order to connect to the Database.  Connection to "localhost" from Spring Gumball will not work since there's no MySQL DB running on the same "VM" as the Spring Gumball Container.
-
-* Use the following Docker Run command to start your MySQL Container in an isolated Network named "gumball". Note: create the network if it doesn't exist yet.
-
-```
-docker network create --driver bridge gumball
-docker run -d --network gumball --name mysql -td -p 3306:3306 -e MYSQL_ROOT_PASSWORD=cmpe172 mysql:8.0
-```
-
-
-* Then, run the Spring Gumball App in Docker on the same "gumball" network passing in an environment setting to thell Spring JPA to connect to MySQL via the hostname "mysql".  The "hostname" for a container is the name it was launched with.
-
-```
-docker run --network gumball -e "MYSQL_HOST=mysql" --name spring-gumball -td -p 8080:8080 spring-gumball  
-```
-
-* For Docker Compose, you can use the following Manifest.  
-
-```
-version: "3"
-
-services:
-  mysql:
-    image: mysql:8.0
-    volumes:
-      - /tmp:/tmp
-    networks:
-      - network   
-    ports:
-      - 3306    
-    networks:
-      - network
-    environment:
-      MYSQL_ROOT_PASSWORD: "cmpe172"
-    restart: always     
-  gumball:
-    image: spring-gumball
-    depends_on:
-    - mysql    
-    volumes:
-      - /tmp:/tmp
-    networks:
-      - network   
-    ports:
-      - 8080    
-    environment:
-      MYSQL_HOST: "mysql"
-    restart: always     
-  lb:
-    image: eeacms/haproxy
-    depends_on:
-    - gumball
-    ports:
-    - "80:5000"
-    - "1936:1936"
-    environment:
-      BACKENDS: "gumball"
-      BACKENDS_PORT: "8080"
-      DNS_ENABLED: "true"
-      COOKIES_ENABLED: "false"
-      LOG_LEVEL: "info"
-    networks:
-      - network
-
-volumes:
-  schemas:
-    external: false
-
-networks:
-  network:
-    driver: bridge
-```
 
 
 # References
 
-## Docker Networking
 
-* https://docs.docker.com/config/containers/container-networking/
-* https://docs.docker.com/network/network-tutorial-standalone/
-* https://docs.docker.com/network/bridge/
+## Building a RESTful Web Service: 
 
-## MySQL:
+* https://spring.io/guides/gs/rest-service
+* https://github.com/spring-guides/gs-rest-service
 
-* Spring Data JDBC:  https://spring.io/projects/spring-data-jdbc
-* Spring Data JPA:  https://spring.io/projects/spring-data-jpa
-* MySQL Reference (version 8.0):  https://dev.mysql.com/doc/refman/8.0/en/
-* MySQL Docker Image:  https://hub.docker.com/_/mysql
-* Connecting from GKE:  https://cloud.google.com/sql/docs/mysql/connect-kubernetes-engine
-* MySQL Workbench:  https://www.mysql.com/products/workbench/
-  - Get version 8.0.22 from Archives (on Mac)
-  - https://downloads.mysql.com/archives/workbench/
-* Astah DB Reverse Plug-Inb:  https://astah.net/product-plugins/db-reverse-plug-in/
-* DB Schema (Free Edition):  https://dbschema.com/editions.html
-* Google Cloud SQL:  https://cloud.google.com/sql
-  - Supported Versions:  5.6, 5.7 and 8.0
+## Building a Hypermedia-Driven RESTful Web Service
 
-## Mongo
+* https://spring.io/guides/gs/rest-hateoas
+* https://github.com/spring-guides/gs-rest-hateoas
 
-* Spring Data MongoDB:  https://spring.io/projects/spring-data-mongodb
-* MongoDB Reference (version 4.4):  https://docs.mongodb.com/manual/
-  - CRUD Concepts:  https://docs.mongodb.com/manual/core/crud/
-  - CRUD Operations:  https://docs.mongodb.com/manual/crud/
-  - BIOS Example Collection:  https://docs.mongodb.com/manual/reference/bios-example-collection/
-  - SQL to Mongo Mappings:  https://docs.mongodb.com/manual/reference/sql-comparison/
-  - Aggregation Pipeline:  https://docs.mongodb.com/manual/aggregation/
-* MongoDB Docker Image:  https://hub.docker.com/_/mongo
-* Robo 3T for Mongo:  https://robomongo.org/
-* MongoDB on Google Cloud:  https://www.mongodb.com/cloud/atlas/mongodb-google-cloud
+## Building REST services with Spring
+
+* https://spring.io/guides/tutorials/rest/
+* https://docs.spring.io/spring-hateoas/docs/1.2.4/api/
+* https://github.com/spring-projects/spring-hateoas-examples
 
 
-## Redis
 
-* Spring Data Redis:  https://spring.io/projects/spring-data-redis
-* Redis Documentation:  https://redis.io/documentation
-* Redis Commands Reference:  https://redis.io/commands
-* Redis Command Line Interface:  https://redis.io/topics/rediscli
-* Redis Tutorial:  https://www.tutorialspoint.com/redis/index.htm
-* Google Memorystore:  https://cloud.google.com/memorystore
-  - Supported Versions:  3.2, 4.0, 5.0
 
 
 

@@ -1,5 +1,5 @@
 
-# LAB #6 NOTES
+# CMPE 172 - Lab #6 - Spring REST
 
 * Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab6
 

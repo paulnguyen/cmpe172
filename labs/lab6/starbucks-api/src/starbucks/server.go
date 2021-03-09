@@ -184,7 +184,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	mx.HandleFunc("/cards", starbucksCardsGetHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/cards", starbucksCardsPostHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/cards/{num}", starbucksCardsGetHandler(formatter)).Methods("GET")
-	mx.HandleFunc("/cards/{num}/{code}/activate", starbucksCardActivateHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/card/activate/{num}/{code}", starbucksCardActivateHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/order/register/{regid}", starbucksNewOrderHandler(formatter)).Methods("POST")
 	mx.HandleFunc("/order/register/{regid}", starbucksGetOrderHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/order/register/{regid}", starbucksClearOrderHandler(formatter)).Methods("DELETE")

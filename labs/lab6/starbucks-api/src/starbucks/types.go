@@ -9,7 +9,7 @@ type starbucks_card struct {
 	CardNumber string
 	CardCode   string
 	Balance    float32
-//	Server 	   string
+	Activated  bool
 	Status     string 
 }
 
@@ -18,7 +18,6 @@ type starbucks_order struct {
 	Milk   		string
 	Size    	string
 	Total		float32
-//	Server		string
 	Status		string
 }
 

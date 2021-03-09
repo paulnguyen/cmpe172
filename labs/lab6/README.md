@@ -103,6 +103,10 @@ The Starbucks API Specification is as follows:
 GET 	/ping
 		Ping Health Check.
 
+		{
+		  "Test": "Starbucks API version 1.0 alive!"
+		}		
+
 GET 	/cards 
 		Get a list of Starbucks Cards (along with balances).
 
@@ -110,12 +114,16 @@ GET 	/cards
 		  {
 		    "CardNumber": "498498082",
 		    "CardCode": "425",
-		    "Balance": 20.00
+		    "Balance": 20,
+		    "Activated": false,
+		    "Status": ""
 		  },
 		  {
 		    "CardNumber": "627131848",
 		    "CardCode": "547",
-		    "Balance": 20.00
+		    "Balance": 20,
+		    "Activated": false,
+		    "Status": ""
 		  }
 		]		
 
@@ -123,9 +131,11 @@ POST 	/cards
 		Create a new Starbucks Card.
 
 		{
-		  "CardNumber": "627131848",
-		  "CardCode": "547",
-		  "Balance": 20.00
+		  "CardNumber": "498498082",
+		  "CardCode": "425",
+		  "Balance": 20,
+		  "Activated": false,
+		  "Status": "New Card."
 		}
 
 GET 	/cards/{num}
@@ -134,20 +144,26 @@ GET 	/cards/{num}
 		{
 		  "CardNumber": "627131848",
 		  "CardCode": "547",
-		  "Balance": 20.00
+		  "Balance": 20,
+		  "Activated": false,
+		  "Status": ""
 		}		
 
-GET 	/card/{num}/{code}
-		Validate Card 
+POST 	/card/activate/{num}/{code}
+		Activate Card 
 
 		{
 		  "CardNumber": "627131848",
 		  "CardCode": "547",
-		  "Balance": 20.00
-		}	
+		  "Balance": 20,
+		  "Activated": true,
+		  "Status": ""
+		}
 
 POST    /order/register/{regid}
         Create a new order. Set order as "active" for register.
+
+        Request:
 
 	    {
 	      "Drink": "Latte",
@@ -155,23 +171,73 @@ POST    /order/register/{regid}
 	      "Size":  "Grande"
 	    }         
 
+	    Response:
+
+		{
+		  "Drink": "Latte",
+		  "Milk": "Whole",
+		  "Size": "Grande",
+		  "Total": 2.413125,
+		  "Status": "Ready for Payment."
+		}	    
+
 GET     /order/register/{regid}
         Request the current state of the "active" Order.
+
+		{
+		  "Drink": "Latte",
+		  "Milk": "Whole",
+		  "Size": "Grande",
+		  "Total": 2.413125,
+		  "Status": "Ready for Payment."
+		}
 
 DELETE  /order/register/{regid}
         Clear the "active" Order.
 
+		{
+		  "Status": "Active Order Cleared!"
+		}
+
 POST    /order/register/{regid}/pay/{cardnum}
         Process payment for the "active" Order. 
+
+        Response: (with updated card balance)
+
+		{
+		  "CardNumber": "627131848",
+		  "CardCode": "547",
+		  "Balance": 15.17375,
+		  "Activated": true,
+		  "Status": ""
+		}
 
 GET     /orders
         Get a list of all active orders (for all registers)
 
+		{
+		  "5012349": {
+		    "Drink": "Latte",
+		    "Milk": "Whole",
+		    "Size": "Grande",
+		    "Total": 4.82625,
+		    "Status": "Paid with Card: 627131848 Balance: $15.17."
+		  }
+		}
+
 DELETE 	/cards
 		Delete all Cards (Use for Unit Testing Teardown)
 
+		{
+		  "Status": "All Cards Cleared!"
+		}
+
 DELETE 	/orders
 		Delete all Orders (Use for Unit Testing Teardown)
+
+		{
+		  "Status": "All Orders Cleared!"
+		}
 ```
 
 ## Explore the Sample Node.js and Java Mobile App Simulator (Optional)

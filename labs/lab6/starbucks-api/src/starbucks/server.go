@@ -72,7 +72,7 @@ POST 	/cards
 		  "Status": "New Card."
 		}
 
-GET 	/cards/{num}
+GET 	/card/{num}
 		Get the details of a specific Starbucks Card.
 
 		{
@@ -213,10 +213,9 @@ func starbucksNewOrderHandler(formatter *render.Render) http.HandlerFunc {
 		}
 		var active = orders[regid]
 		fmt.Printf("Active Order: %+v\n", active)
-		if order.Drink == "" {
-			fmt.Printf("Clearing Active Order: %+v\n", order)
-			delete ( orders, regid )
-			formatter.JSON(w, http.StatusOK, struct{ Status string }{ "Active Order Cleared!" })
+		if order.Drink == "" || order.Milk == "" || order.Size == "" {
+			fmt.Printf("Invalid Order: %+v\n", order)
+			formatter.JSON(w, http.StatusBadRequest, struct{ Status string }{ "Invalid Order Request!" })
 		} else if active.Status == "Ready for Payment." {
 			fmt.Println("Active Order Exists!")
 			formatter.JSON(w, http.StatusBadRequest, struct{ Status string }{ "An Active Order Exists!" })			

@@ -1,8 +1,9 @@
 
+
 .gradle
-/build/
+build
 *.class
-*.log
+debug.log
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -12,4 +13,3 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
-.DS_Store

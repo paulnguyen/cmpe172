@@ -138,7 +138,7 @@ POST 	/cards
 		  "Status": "New Card."
 		}
 
-GET 	/cards/{num}
+GET 	/card/{num}
 		Get the details of a specific Starbucks Card.
 
 		{

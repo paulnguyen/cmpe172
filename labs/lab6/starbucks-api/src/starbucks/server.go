@@ -324,7 +324,7 @@ func starbucksProcessOrderPaymentHandler(formatter *render.Render) http.HandlerF
 	}
 }
 
-// Get Starbucks Cards
+// Get Starbucks Cards Handler (List of Just One)
 func starbucksCardsGetHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		params := mux.Vars(req)
@@ -351,7 +351,7 @@ func starbucksCardsGetHandler(formatter *render.Render) http.HandlerFunc {
 }
 
 
-// Get Starbucks Cards
+// Activate Starbucks Card Handler
 func starbucksCardActivateHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		params := mux.Vars(req)
@@ -370,14 +370,14 @@ func starbucksCardActivateHandler(formatter *render.Render) http.HandlerFunc {
 				 	cards[cardnum] = card
 				 	formatter.JSON(w, http.StatusOK, card)
 			} else {
-				formatter.JSON(w, http.StatusNotFound, struct{ Status string }{ "Error. Card Not Valid!" })	
+				formatter.JSON(w, http.StatusNotFound, struct{ Status string }{  "Error. Card Not Valid!" })	
 			}			
 		}
 	}
 }
 
 
-// Add Starbucks Card
+// Create New Starbucks Card Handler
 func starbucksCardsPostHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 
@@ -399,7 +399,7 @@ func starbucksCardsPostHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
-// Delete all Orders
+// Delete all Orders Handler
 func starbucksDeleteOrdersHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		orders = make(map[string]starbucks_order)
@@ -407,7 +407,7 @@ func starbucksDeleteOrdersHandler(formatter *render.Render) http.HandlerFunc {
 	}
 }
 
-// Delete all Cards
+// Delete all Cards Handler
 func starbucksDeleteCardsHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		cards = make(map[string]starbucks_card)

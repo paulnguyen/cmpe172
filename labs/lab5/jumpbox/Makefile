@@ -1,7 +1,7 @@
 all: clean
 
 jumpbox:
-	docker run --name jumpbox -t -d ubuntu
+	docker run --network test --name jumpbox -t -d ubuntu
 
 shell:
 	docker exec -it jumpbox bash 

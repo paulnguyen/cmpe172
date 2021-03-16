@@ -8,6 +8,8 @@ import (
 
 	"fmt"
 //	"os"
+	"math"
+	"strings"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -223,7 +225,8 @@ func starbucksNewOrderHandler(formatter *render.Render) http.HandlerFunc {
 			// Create a New Order
 			var index = rand.Intn(10)
 			var price = prices[index] + (prices[index] * 0.0725)
-			order.Total = price
+			var round = math.Round(price*100)/100
+			order.Total = round
 			order.Status = "Ready for Payment."
 			orders[regid] = order
 			fmt.Println("Register: ", regid)
@@ -298,7 +301,7 @@ func starbucksProcessOrderPaymentHandler(formatter *render.Render) http.HandlerF
 			formatter.JSON(w, http.StatusNotFound, struct{ Status string }{ "Error. Order Not Found!" })			
 		} else if cardnum == "" {
 			formatter.JSON(w, http.StatusBadRequest, struct{ Status string }{ "Error. Card Number Not Provided!" })	
-		} else if order.Status != "Ready for Payment." {
+		} else if strings.HasPrefix(order.Status, "Paid with Card:") {
 			formatter.JSON(w, http.StatusBadRequest, struct{ Status string }{ "Clear Paid Active Order!" })	
 		} else {
 			var price = order.Total

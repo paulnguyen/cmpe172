@@ -1,5 +1,5 @@
 
-# LAB #6 NOTES
+# CMPE 172 - Lab #6 - Spring REST
 
 * Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab6
 
@@ -103,6 +103,10 @@ The Starbucks API Specification is as follows:
 GET 	/ping
 		Ping Health Check.
 
+		{
+		  "Test": "Starbucks API version 1.0 alive!"
+		}		
+
 GET 	/cards 
 		Get a list of Starbucks Cards (along with balances).
 
@@ -110,12 +114,16 @@ GET 	/cards
 		  {
 		    "CardNumber": "498498082",
 		    "CardCode": "425",
-		    "Balance": 20.00
+		    "Balance": 20,
+		    "Activated": false,
+		    "Status": ""
 		  },
 		  {
 		    "CardNumber": "627131848",
 		    "CardCode": "547",
-		    "Balance": 20.00
+		    "Balance": 20,
+		    "Activated": false,
+		    "Status": ""
 		  }
 		]		
 
@@ -123,9 +131,11 @@ POST 	/cards
 		Create a new Starbucks Card.
 
 		{
-		  "CardNumber": "627131848",
-		  "CardCode": "547",
-		  "Balance": 20.00
+		  "CardNumber": "498498082",
+		  "CardCode": "425",
+		  "Balance": 20,
+		  "Activated": false,
+		  "Status": "New Card."
 		}
 
 GET 	/cards/{num}
@@ -134,20 +144,26 @@ GET 	/cards/{num}
 		{
 		  "CardNumber": "627131848",
 		  "CardCode": "547",
-		  "Balance": 20.00
+		  "Balance": 20,
+		  "Activated": false,
+		  "Status": ""
 		}		
 
-GET 	/card/{num}/{code}
-		Validate Card 
+POST 	/card/activate/{num}/{code}
+		Activate Card 
 
 		{
 		  "CardNumber": "627131848",
 		  "CardCode": "547",
-		  "Balance": 20.00
-		}	
+		  "Balance": 20,
+		  "Activated": true,
+		  "Status": ""
+		}
 
 POST    /order/register/{regid}
         Create a new order. Set order as "active" for register.
+
+        Request:
 
 	    {
 	      "Drink": "Latte",
@@ -155,23 +171,73 @@ POST    /order/register/{regid}
 	      "Size":  "Grande"
 	    }         
 
+	    Response:
+
+		{
+		  "Drink": "Latte",
+		  "Milk": "Whole",
+		  "Size": "Grande",
+		  "Total": 2.413125,
+		  "Status": "Ready for Payment."
+		}	    
+
 GET     /order/register/{regid}
         Request the current state of the "active" Order.
+
+		{
+		  "Drink": "Latte",
+		  "Milk": "Whole",
+		  "Size": "Grande",
+		  "Total": 2.413125,
+		  "Status": "Ready for Payment."
+		}
 
 DELETE  /order/register/{regid}
         Clear the "active" Order.
 
+		{
+		  "Status": "Active Order Cleared!"
+		}
+
 POST    /order/register/{regid}/pay/{cardnum}
         Process payment for the "active" Order. 
+
+        Response: (with updated card balance)
+
+		{
+		  "CardNumber": "627131848",
+		  "CardCode": "547",
+		  "Balance": 15.17375,
+		  "Activated": true,
+		  "Status": ""
+		}
 
 GET     /orders
         Get a list of all active orders (for all registers)
 
+		{
+		  "5012349": {
+		    "Drink": "Latte",
+		    "Milk": "Whole",
+		    "Size": "Grande",
+		    "Total": 4.82625,
+		    "Status": "Paid with Card: 627131848 Balance: $15.17."
+		  }
+		}
+
 DELETE 	/cards
 		Delete all Cards (Use for Unit Testing Teardown)
 
+		{
+		  "Status": "All Cards Cleared!"
+		}
+
 DELETE 	/orders
 		Delete all Orders (Use for Unit Testing Teardown)
+
+		{
+		  "Status": "All Orders Cleared!"
+		}
 ```
 
 ## Explore the Sample Node.js and Java Mobile App Simulator (Optional)
@@ -183,21 +249,7 @@ In future Labs, you will have to modify these Apps to work with your Spring Star
 
 ### Example Workflow
 
-1. Starbucks App (Mobile App Simulator)
-
-* Requires Gradle 4.9 and Java JDK 8
-* Launch and Login with PIN: 1234 
-* See starbuccks-app.xlsx 
-
-![1-starbucks-app](images/1-starbucks-app.png)
-
-2. Placing an Order on the Starbucks Cash Register (Node.js App)
-
-* Note: To run Node.js App, use Node.js version: v8.15.0
-
-![2-starbucks-register-place-order](images/2-starbucks-register-place-order.png)
-
-3. Run Starbucks API (Compile and run in Go)
+1. Run Starbucks API (Compile and run in Go)
 
 * Note: To run Go API App, use GO version: 1.11 (code doesn't support modules yet)
 
@@ -215,7 +267,28 @@ In future Labs, you will have to modify these Apps to work with your Spring Star
 * Alternatively, run via Docker Image:  paulnguyen/starbucks-api:v1.0
 
 ```
-	docker run --name starbucks -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
+	docker network create --driver bridge starbucks
+	docker run --network starbucks --name starbucks-api -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
+```
+
+2. Starbucks App (Mobile App Simulator)
+
+* Requires Gradle 4.9 and Java JDK 8
+* Launch and Login with PIN: 1234 
+* See starbuccks-app.xlsx 
+
+![1-starbucks-app](images/1-starbucks-app.png)
+
+3. Placing an Order on the Starbucks Cash Register (Node.js App)
+
+* Note: To run Node.js App, use Node.js version: v8.15.0
+
+![2-starbucks-register-place-order](images/2-starbucks-register-place-order.png)
+
+* Alternatively, run via Docker Image: paulnguyen/starbucks-nodejs:v1.0
+
+```
+docker run --network starbucks --name starbucks-nodejs -p 8080:8080  -e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0
 ```
 
 4. Paying on the Starbucks App
@@ -237,7 +310,6 @@ In future Labs, you will have to modify these Apps to work with your Spring Star
 8. Sample REST API Calls from Insomnia (List Orders)
 
 ![8-rest-api-orders](images/8-rest-api-orders.png)
-
 
 
 

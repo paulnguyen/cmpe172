@@ -74,6 +74,17 @@ public class Card {
 
             System.err.println( "New Card: " + cardId + "[" + cardCode + "] Balance: " + balance ) ;
 
+           // activate it
+           HttpResponse<JsonNode> response2 = Unirest.post( apiurl + "/card/activate/" + cardId + "/" + cardCode )
+                .header( "apikey", apikey )
+                .asJson() ;
+            int status_code2 = response2.getStatus() ;
+            String status_text2 = response2.getStatusText() ;
+            System.err.println( "Status: " + String.valueOf(status_code2) + " " + status_text2 ) ;
+            JSONObject json2 = response2.getBody().getObject() ;
+            System.err.println( json2.toString() ) ;    
+
+
         } catch (Exception e) {
 
             System.err.println( e ) ;
@@ -103,6 +114,7 @@ public class Card {
         
         try {
 
+            // create a new card
             HttpResponse<JsonNode> response = 
                 Unirest.post( apiurl + "/order/register/"+register+"/pay/"+cardId)
                     .header( "apikey", apikey )
@@ -111,8 +123,8 @@ public class Card {
             System.err.println( json.toString() ) ;
 
             double new_bal = json.getDouble( "Balance" )  ;  
-            this.balance = new_bal ;
-        
+            this.balance = new_bal ;    
+
         } catch (Exception e) {
 
             System.err.println( e ) ;

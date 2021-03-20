@@ -246,7 +246,6 @@ func starbucksGetOrderHandler(formatter *render.Render) http.HandlerFunc {
 		if order == (starbucks_order{}) {
 			//name, _ := os.Hostname()
 			error := struct{ 					//Server string 
-
 					Status string }{ 
 						//name, 
 						"Order Not Found!",
@@ -363,6 +362,22 @@ func starbucksCardActivateHandler(formatter *render.Render) http.HandlerFunc {
 		fmt.Println("Card Number: ", cardnum)
 		fmt.Println("Card Code: ", cardcode)
 		var card = cards[cardnum]
+
+		// special card for testing
+		if ( cardnum == "123456789" && cardcode == "999" ) {
+			var card = starbucks_card{
+				CardNumber: cardnum,
+				CardCode:   cardcode,
+				Balance:    20.00,
+				Activated:  true,
+			}
+			if cards == nil {
+				cards = make(map[string]starbucks_card)
+			}
+			cards[cardnum] = card	
+			formatter.JSON(w, http.StatusOK, card)
+		}
+
 		if (starbucks_card{} == card) {
 			formatter.JSON(w, http.StatusNotFound, struct{ Status string }{ "Error. Card Not Found!" })	
 		} else {

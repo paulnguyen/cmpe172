@@ -3,9 +3,17 @@ package com.example.springcybersource;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.beans.factory.annotation.Value;
 
 @SpringBootApplication
 public class SpringCybersourceApplication implements CommandLineRunner {
+
+	private static boolean DEBUG = true ;
+
+    @Value("${cybersource.apihost}") private String apiHost ;
+    @Value("${cybersource.merchantkeyid}") private String merchantKeyId ;
+    @Value("${cybersource.merchantsecretkey}") private String merchantsecretKey ;
+    @Value("${cybersource.merchantid}") private String merchantId ;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringCybersourceApplication.class, args);
@@ -15,8 +23,19 @@ public class SpringCybersourceApplication implements CommandLineRunner {
     public void run(String... args) {
 		
         System.out.println("===== CYBERSOURCE PAYMENT TEST =====") ;
+
+        if (DEBUG) {
+         	System.out.println( apiHost ) ;
+        	System.out.println( merchantKeyId ) ;
+        	System.out.println( merchantsecretKey ) ;
+        	System.out.println( merchantId ) ;         	
+        }
  
 		CyberSourceAPI api = new CyberSourceAPI() ;
+		CyberSourceAPI.setHost( apiHost ) ;
+		CyberSourceAPI.setKey( merchantKeyId ) ;
+		CyberSourceAPI.setSecret(merchantsecretKey ) ;
+		CyberSourceAPI.setMerchant( merchantId ) ;
 
 		AuthRequest auth = new AuthRequest() ;
 		auth.reference = "Order Number: 12345" ;

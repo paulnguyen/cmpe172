@@ -12,6 +12,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
+
 /* 
     https://developer.cybersource.com/
     https://developer.cybersource.com/hello-world.html
@@ -29,14 +30,27 @@ public class CyberSourceAPI {
 	/* Try with your own credentaials
      * Get  Key ID, Secret Key and Merchant Id from EBC portal
      */
-    public String merchantKeyId  = "--YOUR-MERCHANT-KEY-ID--";
-    public String merchantsecretKey = "--YOUR-MERCHANT-KEY-SECRET";
-    public String merchantId = "--YOUR-MERCHANT-ID--";
+
+    private static String requestHost ;
+    private static String merchantKeyId ;
+    private static String merchantsecretKey ;
+    private static String merchantId ;
 	
+    public static void setHost( String h ) { requestHost = h ; }
+    public static void setKey( String k ) { merchantKeyId = k ; }
+    public static void setSecret( String s ) { merchantsecretKey = s ; }
+    public static void setMerchant( String m ) { merchantId = m ; }
+
+    public static void debugConfig() {
+        System.out.println( requestHost ) ;
+        System.out.println( merchantKeyId ) ;
+        System.out.println( merchantsecretKey ) ;
+        System.out.println( merchantId ) ;          
+    }
+
     /* Sandbox Host: apitest.cybersource.com
      * Production Host: api.cybersource.com 
      */
-    public static String requestHost = "apitest.cybersource.com";
     private final String USER_AGENT = "Mozilla/5.0";
     public static String gmtDateTime = "DATE_PLACEHOLDER";
     public static String postRequestTarget = "REQUEST_TARGET_PALCEHOLDER";

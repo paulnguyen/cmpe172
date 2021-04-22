@@ -394,22 +394,5 @@ http $KONG/api/ping
 http $KONG/api/ping apikey:Zkfokey2311
 ```
 
-![XXX.png](images/XXX.png)
-
-
-### Debugging Kong Ingress Controller
-
-```
-kubectl apply -f kong-ingress-controller.yaml
-
-kubectl create -f jumpbox-kong.yaml
-kubectl exec -n kong -it jumpbox-kong -- /bin/bash
-apt-get update
-apt-get install curl -y
-curl kong-admin:8100/status
-
-
-
-```
 
 

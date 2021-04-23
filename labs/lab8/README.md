@@ -395,4 +395,67 @@ http $KONG/api/ping apikey:Zkfokey2311
 ```
 
 
+### Debugging Key Auth & K8S Secrets
+
+* The Kong API Gateway Seems to Fail to Register Key Auth sometimes
+* If you Kong seems to not be picking up the Key, try deleting and creating a new key
+
+```
+
+# Edit kong-credentials.yaml
+
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: apiclient
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: apiclient
+credentials:
+- newkey
+
+
+# Apply New Credentials
+
+kubectl apply -f kong-credentials.yaml
+
+# Create New Key Secret
+
+kubectl create secret generic newkey --from-literal=kongCredType=key-auth --from-literal=key=Zkfokey2311
+
+# Test API
+
+http $KONG/api/ping apikey:Zkfokey2311
+
+HTTP/1.1 200 
+Connection: keep-alive
+Content-Type: application/json
+Date: Fri, 23 Apr 2021 05:50:50 GMT
+Transfer-Encoding: chunked
+Via: kong/2.3.3
+X-Kong-Proxy-Latency: 1
+X-Kong-Upstream-Latency: 12
+
+# If Needed, Check Secrets
+
+kubectl get secrets
+kubectl get secret apikey
+kubectl describe secrets/apikey
+kubectl get secret apikey -o jsonpath='{.data}'
+
+or
+
+kubectl get secrets
+kubectl get secret newkey
+kubectl describe secrets/newkey
+kubectl get secret newkey -o jsonpath='{.data}'
+
+
+# Use Site to Decode (Base 64) Secret
+
+https://www.base64decode.org/
+
+ 
+
+```
 

@@ -436,6 +436,11 @@ Via: kong/2.3.3
 X-Kong-Proxy-Latency: 1
 X-Kong-Upstream-Latency: 12
 
+{
+    "test": "Starbucks API version 2.0 alive!"
+}
+
+
 # If Needed, Check Secrets
 
 kubectl get secrets

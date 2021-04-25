@@ -1,0 +1,10 @@
+apiVersion: "extensions/v1beta1"
+kind: "Ingress"
+metadata:
+  name: "spring-rabbitmq-ingress"
+  namespace: "default"
+spec:
+  backend:
+    serviceName: "spring-rabbitmq-service"
+    servicePort: 8080
+

@@ -1,0 +1,16 @@
+
+-- RabbitMQ Create Queue:  
+
+	Queue Name: gumball
+	Durable:	no
+
+	> docker exec -it rabbitmq bash 
+	> rabbitmqadmin declare queue name=gumball durable=false
+	> rabbitmqadmin list queues vhost name node messages 
+
+
+
+
+
+
+	

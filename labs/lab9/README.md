@@ -1,6 +1,15 @@
 
 # CMPE 172 - Lab #9 - Spring RabbitMQ
 
+Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab9
+
+In this Lab, you will will be experimenting with Spring AMQP Messaging using RabbitMQ.  You will be deploying a simple one node RabbitMQ on Docker and test your code localling.
+
+There will be an Appendix with additional materials for deployment to Google Cloud (GKE) for your review.  You should practice GKE deployment to prepare for the Final Exam (and for your Team Project), but deployment to GKE is not a requirement in this Lab.
+
+Your work should be committed on a regular basis (each day you have a change) to your assigned GitHub Private Repo in the https://github.com/nguyensjsu (Links to an external site.) organization. Your submission should include all the source code and notes on your work (including required screenshots) in README.md (GitHub Markdown).
+
+In the /labs/lab9 folder, include images (screenshots) in your README.md (lab notes).
 
 
 ## Messaging with RabbitMQ

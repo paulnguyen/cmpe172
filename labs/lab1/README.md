@@ -140,7 +140,7 @@ Your work should be committed on a regular basis (each day you have a change) to
 			return String.format("Hello %s!", name);
 		}
 	}
-```
+	```
 
 3. Using the Lab files provided, Do the following:
 

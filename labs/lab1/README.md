@@ -1,3 +1,4 @@
+
 # CMPE 172 - Lab #1 - Hello Spring
 
 In this Lab, you will be building the Spring Demo App using different Spring Tools and deploying the Demos on Docker and Google Cloud.  
@@ -7,180 +8,227 @@ Your work should be committed on a regular basis (each day you have a change) to
 * In the /labs/lab1 folder, include
   * demo-initializr
   * demo-vscode
+  * demo-intellij
   * demo-docker
-  * tacos-cloud
   * images (screenshots)
   * README.md (lab notes)
 
-## Part 1 -- Spring Demo App
 
-### Spring Demo App Using Spring Initializr
+## Spring Demo App Using Spring Initializr
 
 1. Generate a New Spring Boot Project using the following parameters via https://start.spring.io/ (online Spring Boot Initializr).
 
-* Project: Gradle Project
-* Language: Java Language (JDK 11)
-* Spring Boot Version: 2.4.2
-* Group: com.example
-* Artifact: demo-initializr
-* Name: demo-initializr
-* Package Name: come.example.demo-initializr
-* Packaging: Jar
-* Dependencies:
-  * Spring Web
+	* Project: Gradle Project
+	* Language: Java Language (JDK 11)
+	* Spring Boot Version: 2.4.2
+	* Group: com.example
+	* Artifact: demo-initializr
+	* Name: demo-initializr
+	* Package Name: come.example.demo-initializr
+	* Packaging: Jar
+	* Dependencies:
+	  * Spring Web
+
+	![Spring Initializr](images/spring-initializr.png)
 
 2. Extract the Zip file and store in your Git Folder /labs/lab1/demo-initializr.  Make changes to the App using the following code. Note: you will need to modify the Class Name to match the code generated.
-
-```
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-@SpringBootApplication
-@RestController
-public class DemoXXXApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(DemoXXXApplication.class, args);
+	
+	```
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RequestParam;
+	import org.springframework.web.bind.annotation.RestController;
+	
+	@SpringBootApplication
+	@RestController
+	public class DemoXXXApplication {
+	
+		public static void main(String[] args) {
+			SpringApplication.run(DemoXXXApplication.class, args);
+		}
+	
+		@GetMapping("/hello")
+		public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+			return String.format("Hello %s!", name);
+		}
 	}
-
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
-	}
-}
-```
+	```
 
 3. Run the Spring Demo App on your Local Machine with the message: *Hello CMPE 172!*.  Take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
 
-![Spring Initializr](images/spring-initializr.png)
 
-### Spring Demo App Using Spring Tools in Visual Studio Code
+
+## Spring Demo App Using Spring Tools in Visual Studio Code
 
 1. Generate a New Spring Boot Project using the following parameters from Visual Studio Code. Store in your Git Folder /labs/lab1/demo-vscode.
 
-* Project: Gradle Project
-* Language: Java Language (JDK 11)
-* Spring Boot Version: 2.4.2
-* Group: com.example
-* Artifact: demo-vscode
-* Name: demo-vscode
-* Package Name: come.example.demo-vscode
-* Packaging: Jar
-* Dependencies:
-  * Spring Web
+	* Project: Gradle Project
+	* Language: Java Language (JDK 11)
+	* Spring Boot Version: 2.4.2
+	* Group: com.example
+	* Artifact: demo-vscode
+	* Name: demo-vscode
+	* Package Name: come.example.demo-vscode
+	* Packaging: Jar
+	* Dependencies:
+	  * Spring Web
 
 2. Make the Appropriate Code Changes using the following:
 
-```
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-@SpringBootApplication
-@RestController
-public class DemoXXXApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(DemoXXXApplication.class, args);
+	```
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RequestParam;
+	import org.springframework.web.bind.annotation.RestController;
+	
+	@SpringBootApplication
+	@RestController
+	public class DemoXXXApplication {
+	
+		public static void main(String[] args) {
+			SpringApplication.run(DemoXXXApplication.class, args);
+		}
+	
+		@GetMapping("/hello")
+		public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+			return String.format("Hello %s!", name);
+		}
 	}
-
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
-	}
-}
-```
+	```
 
 3. Run the Spring Demo App from Visual Studio Code in "Debug Mode" with the message: *Hello CMPE 172!*.  Take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
 
-![Spring Debug](images/spring-debug.png)
+	![Spring Debug](images/spring-debug.png)
 
 
-### Spring Demo App Configured for Docker and Kubernettes
+## Spring Demo App Configured for Docker and Kubernettes
 
 1. Generate a New Spring Boot Project using the following parameters from Visual Studio Code or using Spring Boot Initializr. Store in your Git Folder /labs/lab1/demo-docker.
 
-* Project: Gradle Project
-* Language: Java Language (JDK 11)
-* Spring Boot Version: 2.4.2
-* Group: com.example
-* Artifact: demo-docker
-* Name: demo-vscode
-* Package Name: come.example.demo-docker
-* Packaging: Jar
-* Dependencies:
-  * Spring Web
+	* Project: Gradle Project
+	* Language: Java Language (JDK 11)
+	* Spring Boot Version: 2.4.2
+	* Group: com.example
+	* Artifact: demo-docker
+	* Name: demo-vscode
+	* Package Name: come.example.demo-docker
+	* Packaging: Jar
+	* Dependencies:
+	  * Spring Web
 
 2. Make the Appropriate Code Changes using the following:
 
-```
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-@SpringBootApplication
-@RestController
-public class DemoXXXApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(DemoXXXApplication.class, args);
+	```
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RequestParam;
+	import org.springframework.web.bind.annotation.RestController;
+	
+	@SpringBootApplication
+	@RestController
+	public class DemoXXXApplication {
+	
+		public static void main(String[] args) {
+			SpringApplication.run(DemoXXXApplication.class, args);
+		}
+	
+		@GetMapping("/hello")
+		public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+			return String.format("Hello %s!", name);
+		}
 	}
-
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
-	}
-}
 ```
+
 3. Using the Lab files provided, Do the following:
 
-- [ ] Build Docker Image
-- [ ] Run Docker Container in Docker Desktop (Locally)
-- [ ] Run Docker Container in Google Cloud Kubernetes Engine
-
-Files (add to demo-docker project):
-* Dockerfile 
-* Makefile
-* pod.yaml
-* service.yaml
+	- [ ] Build Docker Image
+	- [ ] Run Docker Container in Docker Desktop (Locally)
+	- [ ] Run Docker Container in Google Cloud Kubernetes Engine
+	
+	Files (add to demo-docker project):
+	* Dockerfile 
+	* Makefile
+	* pod.yaml
+	* service.yaml
 
 Take "Screenshots" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.  Screenshots should include:  Spring Boot App running from Docker Desktop and Google Cloud.
 
 Follow the instructions from Demos in class.
 
 
-## Part 2 -- Tacos Cloud App (Version 1)
-
-Using the Sample code from Chapter 1 of *Spring in Action 5th Edition*, create the Tacos Spring Boot project in /labs/lab1/tacos-cloud and deploy the Application on go Google Cloud Kubernetes Engine.  
-
-Take Screenshots showing:  
-
-1. The Tacos Cloud Pod Workload
-2. The Tacos Cloud Service (show Public IP and Port)
-3. Browser Showing Tacos Cloud App Running
+## Spring Demo App Using JetBrains Intellij IDEA
 
 
-# Lab Notes and References
+1. Generate a New Spring Boot Project using the following parameters from IntelliJ IDEA.  Store in your Git Folder /labs/lab1/demo-intellij.
+
+	* Start a New Spring Initializr Project
+	* Configure Project SDK (i.e. Select your JDK 11 install)
+	* Spring Initializr Settings:
+		1. Name: demo-intellij
+		2. Group: com.example
+		3. Location: <Your GIT Repo>/labs/lab1/demo-intellij
+		4. Artifact: demo
+		5. Type: Maven
+		6. Language: Java
+		7. Packaging: Jar
+		8. Java Version: 11
+		9. Version: 1.0
+		10. Description: Demo project for Spring Boot
+		11. Package: com.example.demo
+	
+		![Demo IntelliJ](images/demo-intellij-1.png)
+		
+	* Configure Sping Boot Options
+		1. Spring Boot Version: latest (i.e. 2.5.3)
+		2. Spring Dependencies:
+			* Spring Web
+
+		![Demo IntelliJ](images/demo-intellij-2.png)
+
+2. Make the Appropriate Code Changes using the following:
+
+	```
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RequestParam;
+	import org.springframework.web.bind.annotation.RestController;
+	
+	@SpringBootApplication
+	@RestController
+	public class DemoXXXApplication {
+	
+		public static void main(String[] args) {
+			SpringApplication.run(DemoXXXApplication.class, args);
+		}
+	
+		@GetMapping("/hello")
+		public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+			return String.format("Hello %s!", name);
+		}
+	}
+	```
+
+	![Demo IntelliJ](images/demo-intellij-3.png)
+
+3. Run the Spring Demo App on your Local Machine with the message: *Hello CMPE 172!*.  Take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.
 
 
-## References
+* Commands:
+	
+	* mvn package
+	* java -jar target/demo-1.0.jar
 
-* https://spring.io/projects/spring-boot
-* https://docs.spring.io/spring-boot/docs/ (archive)
-* https://docs.spring.io/spring-boot/docs/current/reference/html/ (current)
-* https://education.github.com/git-cheat-sheet-education.pdf (git cheatsheet)
-* https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf (markdown cheatsheet)
-* https://kubernetes.io/docs/reference/kubectl/cheatsheet/ (kubernetes cheatsheet)
-* https://docs.docker.com/engine/reference/commandline/cli/ (docker command line)
-* https://kubernetes.io/docs/concepts/workloads/pods/ (kubernetes pods)
-* https://kubernetes.io/docs/concepts/services-networking/service/ (kubernetes services)
+* URLS:
+
+	* http://localhost:8080/hello
+	* http://localhost:8080/hello?name=Amy
+
+
+# Lab Notes 
 
 
 ## Java JDK and Gradle Setup
@@ -198,6 +246,9 @@ sdk list java |	list all versions available for java
 sdk install java <version> | install a specific version of java
 sdk list gradle | lists all versions available for gradle
 sdk install gradle <version> | install a specific version of gradle
+sdk list maven | lists all versions available for maven
+sdk install maven <version> | install a specific version of maven
+
 
 * Sample Setup:
 
@@ -207,6 +258,7 @@ pnguyen@macbook ~ % sdk current
 Using:
 
 gradle: 5.6
+maven: 3.8.1
 java: 11.0.10.j9-adpt
 
 ```
@@ -274,10 +326,52 @@ public String hello(@RequestParam(value = "name", defaultValue = "World") String
 * https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-boot-dev-pack
 * https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-boot-dashboard
 
-* How to Use
+### How to Use
 
-	Open VS Code and press F1 or Ctrl + Shift + P to open command palette
-	Type "Spring" to find Spring Boot Tools
+	* Open VS Code and press F1 or Ctrl + Shift + P to open command palette
+	* Type "Spring" to find Spring Boot Tools
+
+
+## Spring Boot with IntelliJ IDEA
+
+* https://www.jetbrains.com/help/idea/getting-started.html
+* https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html
+* https://www.jetbrains.com/help/idea/running-applications.html
+* https://www.jetbrains.com/help/idea/debugging-code.html
+* https://www.jetbrains.com/help/idea/spring-boot.html
+
+### How to Use
+
+* Start a New Spring Initializr Project
+* Configure Project SDK (i.e. Select your JDK 11 install)
+* Spring Initializr Settings:
+	1. Name: demo-intellij
+	2. Group: com.example
+	3. Location: <Your GIT Repo>/labs/lab1/demo-intellij
+	4. Artifact: demo
+	5. Type: Maven
+	6. Language: Java
+	7. Packaging: Jar
+	8. Java Version: 11
+	9. Version: 1.0
+	10. Description: Demo project for Spring Boot
+	11. Package: com.example.demo
+	
+* Configure Sping Boot Options
+	1. Spring Boot Version: latest (i.e. 2.5.3)
+	2. Spring Dependencies:
+		* Spring Web
+
+* Commands:
+	
+	* mvn package
+	* java -jar target/demo-1.0.jar
+
+* URLS:
+
+	* http://localhost:8080/hello
+	* http://localhost:8080/hello?name=Amy
+
 
 
 ## Docker & Kubernetes with Spring Boot
@@ -408,6 +502,21 @@ service-get-ip:
 service-delete:
 	kubectl delete service spring-hello
 ```
+
+
+# References
+
+* https://spring.io/projects/spring-boot
+* https://spring.io/guides
+* https://github.com/spring-guides
+* https://docs.spring.io/spring-boot/docs/ (archive)
+* https://docs.spring.io/spring-boot/docs/current/reference/html/ (current)
+* https://education.github.com/git-cheat-sheet-education.pdf (git cheatsheet)
+* https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf (markdown cheatsheet)
+* https://kubernetes.io/docs/reference/kubectl/cheatsheet/ (kubernetes cheatsheet)
+* https://docs.docker.com/engine/reference/commandline/cli/ (docker command line)
+* https://kubernetes.io/docs/concepts/workloads/pods/ (kubernetes pods)
+* https://kubernetes.io/docs/concepts/services-networking/service/ (kubernetes services)
 
 
 

@@ -8,13 +8,12 @@ Your work should be committed on a regular basis (each day you have a change) to
   * spring-mvc
   * spring-test
   * spring-lombok
-  * tacos-cloud
   * images (screenshots)
   * README.md (lab notes)
 
-## Part 1 -- Spring MVC and Spring Testing
 
-### Spring MVC Project - Serving Web Content with Spring MVC
+
+## Spring MVC Project - Serving Web Content with Spring MVC
 
 * https://spring.io/guides/gs/serving-web-content
 * https://github.com/spring-guides/gs-serving-web-content
@@ -28,7 +27,7 @@ Your work should be committed on a regular basis (each day you have a change) to
 3. *Run the Spring App in Google Cloud and take a "Screenshot" of your Browser and Full Desktop and include this in your Lab Notes README.md in GitHub.*
 
 
-#### Greeting Controller
+### Greeting Controller
 
 ```
 GreetingController.java:
@@ -51,7 +50,7 @@ public class GreetingController {
 
 ```
 
-#### Greetings View Template (Thymeleaf)
+### Greetings View Template (Thymeleaf)
 
 ```
 <!DOCTYPE HTML>
@@ -67,7 +66,9 @@ public class GreetingController {
 ```
 
 
-### Spring Test Project
+
+
+## Spring Test Project
 
 * https://spring.io/guides/gs/testing-web
 * https://github.com/spring-guides/gs-testing-web
@@ -84,7 +85,7 @@ public class GreetingController {
 ![spring-test-results](images/spring-test-results.png)
 
 
-#### Home Controller.java
+### Home Controller.java
 
 ```
 import org.springframework.stereotype.Controller;
@@ -102,7 +103,7 @@ public class HomeController {
 }
 ```
 
-#### SmokeTest.java
+### SmokeTest.java
 
 ```
 import static org.assertj.core.api.Assertions.assertThat;
@@ -125,7 +126,7 @@ public class SmokeTest {
 }
 ```
 
-#### HTTPRequestTest.java
+### HTTPRequestTest.java
 
 ```
 import org.junit.jupiter.api.Test;
@@ -155,7 +156,7 @@ public class HttpRequestTest {
 }
 ```
 
-#### TestingWebApplicationTest.java
+### TestingWebApplicationTest.java
 
 ```
 import static org.hamcrest.Matchers.containsString;
@@ -186,7 +187,7 @@ public class TestingWebApplicationTest {
 }
 ```
 
-#### WebLayerTest.java
+### WebLayerTest.java
 
 ```
 import static org.hamcrest.Matchers.containsString;
@@ -216,7 +217,7 @@ public class WebLayerTest {
 }
 ```
 
-#### GreetingController.java
+### GreetingController.java
 
 ```
 import org.springframework.stereotype.Controller;
@@ -241,7 +242,7 @@ public class GreetingController {
 }
 ```
 
-#### GreetingService.java
+### GreetingService.java
 
 ```
 import org.springframework.stereotype.Service;
@@ -254,7 +255,7 @@ public class GreetingService {
 }
 ```
 
-#### WebMockTest.java
+### WebMockTest.java
 
 ```
 import static org.hamcrest.Matchers.containsString;
@@ -289,7 +290,9 @@ public class WebMockTest {
 }
 ```
 
-### Spring Lombok
+
+
+## Spring Lombok
 
 * https://springframework.guru/spring-boot-with-lombok-part-1/
 
@@ -310,7 +313,7 @@ public class WebMockTest {
 * NonNullUserDemo.print() ;
 
 
-### SpringLombokApplication.java
+## SpringLombokApplication.java
 
 ```
 package com.example.springlombok;
@@ -345,7 +348,7 @@ public class SpringLombokApplication {
 }
 ```
 
-### ValAndVarUserDemo.java
+## ValAndVarUserDemo.java
 
 ```
 package com.example.springlombok;
@@ -390,7 +393,7 @@ public class ValAndVarUserDemo {
   ```
 
 
-### FieldLevelGetterSetterDemo.java
+## FieldLevelGetterSetterDemo.java
 
 ```
 package com.example.springlombok;
@@ -453,7 +456,7 @@ public class FieldLevelGetterSetterDemo {
 }
 ```
 
-### GetterSetterUserDemo.java
+## GetterSetterUserDemo.java
 
 ```
 package com.example.springlombok;
@@ -512,7 +515,7 @@ public class GetterSetterUserDemo {
 }
 ```
 
-### ConstructorUserDemo.java
+## ConstructorUserDemo.java
 
 ```
 package com.example.springlombok;
@@ -574,7 +577,7 @@ public class ConstructorUserDemo {
 }
 ```
 
-### DataUserDemo.java
+## DataUserDemo.java
 
 ```
 package com.example.springlombok;
@@ -630,7 +633,7 @@ public class DataUserDemo {
 }
 ```
 
-### NonNullUserDemo.java
+## NonNullUserDemo.java
 
 ```
 package com.example.springlombok;
@@ -669,15 +672,6 @@ public class NonNullUserDemo {
 
 
 
-## Part 2 -- Tacos Cloud App (Version 2)
-
-Using the Sample code from Chapter 2 of *Spring in Action 5th Edition*, copy your Tacos Spring Boot project from Lag #1 into /labs/lab2/tacos-cloud, make the nessary changes from the Book and deploy the Application on go Google Cloud Kubernetes Engine.  Please note that you make skip porting over the Tests from Chapter 2.
-
-*Take Screenshots showing:*  
-
-1. The Tacos Cloud Pod Workload
-2. The Tacos Cloud Service (show Public IP and Port)
-3. Browser Showing Tacos Cloud App Running
 
 
 # Lab Notes and References

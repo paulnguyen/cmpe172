@@ -41,5 +41,24 @@ docker-stop:
 docker-shell:
 	docker exec -it phptest bash 
 
+compose-network:
+	docker network create --driver bridge dck_network
+
+compose-up:
+	docker-compose up --scale phptest=2 -d
+
+compose-down:
+	docker-compose down 	
+
+lb-stats:
+	echo "user = admin | password = admin"
+	open http://localhost:1936
+
+lb-test:
+	open http://localhost/loadtest.php 
+
+
+
+
 
 

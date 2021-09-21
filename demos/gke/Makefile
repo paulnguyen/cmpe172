@@ -1,3 +1,28 @@
+all: docker-clean
+
+docker-build: 
+	docker build -t phptest .
+	docker images
+
+docker-run: docker-build
+	docker run --name phptest -td -p 80:80 phptest	
+	docker ps
+
+docker-clean:
+	docker stop phptest
+	docker rm phptest
+	docker rmi phptest
+
+docker-shell:
+	docker exec -it phptest bash 
+
+docker-push:
+	docker login
+	docker build -t $(account)/phptest:latest -t $(account)/phptest:latest .
+	docker push $(account)/phptest:latest 
+
+
+# Pod 
 
 pod-run:
 	kubectl apply -f phptest-pod.yaml
@@ -20,6 +45,39 @@ pod-logs:
 port-forward:
 	kubectl port-forward phptest 8080:80
 
+# Deployment
+
+deployment-create:
+	kubectl create -f phptest-deployment.yaml --save-config 
+
+deployment-get:
+	kubectl get deployments
+
+deployment-get-pods:
+	kubectl get pods -l name=phptest
+
+deployment-pod-shell:
+	kubectl exec -it $(pod) -- /bin/bash
+
+deployment-upgrade:
+	kubectl apply  -f phptest-deployment.yaml
+
+deployment-delete:
+	kubectl delete deployment phptest-deployment
+
+# Service
+
+service-create:
+	kubectl create -f phptest-service.yaml
+
+service-get:
+	kubectl get services
+
+service-get-ip:
+	kubectl get service phptest-service -o wide
+
+service-delete:
+	kubectl delete service phptest-service
 
 
 

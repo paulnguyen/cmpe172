@@ -1,7 +1,7 @@
 all: clean
 
 jumpbox:
-	docker run --network test --name jumpbox -t -d ubuntu
+	docker run --name jumpbox -t -d ubuntu
 
 shell:
 	docker exec -it jumpbox bash 
@@ -26,7 +26,4 @@ jumpbox-tools:
 	apt-get update
 	apt-get install curl
 	apt-get install iputils-ping
-
-
-
 

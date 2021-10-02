@@ -1,7 +1,7 @@
 
 # CMPE 172 - Lab #6 - Spring Data 
 
-* Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab5
+* Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab6
 
 In this Lab, you will be exploring Spring Data and Testing them locally on your machine.  In addition, you will be updating Spring Gumballl (to Version 3) and deploying it to Google Cloud (GKE).  
 

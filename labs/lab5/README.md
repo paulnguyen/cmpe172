@@ -1,7 +1,7 @@
 
 # CMPE 172 - Lab #5 - Spring REST
 
-* Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab6
+* Lab Files with Starter Code: https://github.com/paulnguyen/cmpe172/tree/main/labs/lab5
 
 In this Lab, you will be exploring Spring REST APIs and porting a Starbucks REST API written in Go to Java Spring.  In addition, you will be deploying your Starbucks API to Google Cloud (GKE).  
 

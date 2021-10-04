@@ -20,7 +20,7 @@
          Type: instance
          Protocol: http
          Port: 80
-         VPC:  cmpe281
+         VPC:  cmpe172
          Health Check: / (HTTP)
          Instances:  Add Instances to Target Group
      
@@ -29,7 +29,7 @@
          Type: instance
          Protocol: http
          Port: 80
-         VPC:  cmpe281
+         VPC:  cmpe172
          Health Check: / (HTTP)
          Instances:  Add Instances to Target Group
 ``` 
@@ -39,11 +39,11 @@
 ``` 
     Name:               aws-php-elb-app
     Internet Facing:    true
-    VPC:                cmpe281
+    VPC:                cmpe172
     AZ's:               AZ's in your region
                         (us-west-2 or us-east-1)
     Listener: HTTP (Port 80)
-    Security Group: cmpe281-dmz
+    Security Group: cmpe172-dmz
                     Path: /loadtest.php  Target: aws-linux-1 
                     Path: /fibonacci.php Target: aws-linux-2 
                     (Default)            Target: aws-linux-1 

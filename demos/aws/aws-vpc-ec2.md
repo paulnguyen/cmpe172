@@ -5,37 +5,37 @@
     http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-LAMP.html
 ```
 
-## Create Key Pair: cmpe281-us-west-1 
+## Create Key Pair: cmpe172-us-west-1 
 
 ```
-    Download                cmpe281-us-west-1.pem
-    openssl x509 -text -in  cmpe281-us-west-1.pem
+    Download                cmpe172-us-west-1.pem
+    openssl x509 -text -in  cmpe172-us-west-1.pem
 ```
 
 ## Download Key Pair PEM file
 
 ```
-    $ ls -l cmpe281-us-west-1.pem 
-    -rw-r--r--@ 1 pnguyen  staff  1692 Feb 21 18:01 cmpe281-us-west-1.pem
+    $ ls -l cmpe172-us-west-1.pem 
+    -rw-r--r--@ 1 pnguyen  staff  1692 Feb 21 18:01 cmpe172-us-west-1.pem
 
-    $ chmod go-r cmpe281-us-west-1.pem 
+    $ chmod go-r cmpe172-us-west-1.pem 
 
-    $ ls -l cmpe281-us-west-1.pem 
-    -rw-------@ 1 pnguyen  staff  1692 Feb 21 18:01 cmpe281-us-west-1.pem
+    $ ls -l cmpe172-us-west-1.pem 
+    -rw-------@ 1 pnguyen  staff  1692 Feb 21 18:01 cmpe172-us-west-1.pem
 ```
 
 ## PEM Usage on Mac OS X
 
 ```    
     ec2.sh:
-        ssh -i cmpe281-us-west-1.pem ec2-user@<PUBLIC_IP> 
+        ssh -i cmpe172-us-west-1.pem ec2-user@<PUBLIC_IP> 
     scp.sh:
-        scp -i cmpe281-us-west-1.pem $1 ec2-user@<PUBLIC_IP>:/tmp 
+        scp -i cmpe172-us-west-1.pem $1 ec2-user@<PUBLIC_IP>:/tmp 
 
     $ chmod +x *.sh
 ```
 
-## Create VPC:  cmpe281 (Using Wizard)
+## Create VPC:  cmpe172 (Using Wizard)
 
 ```
     - Public with Private Subnets
@@ -45,7 +45,7 @@
     Private subnet instances access the Internet via Network Address Translation (NAT).  
     (Hourly charges for NAT devices apply.)
 
-    CIDR block                  10.0.0.0/16 
+    CIDR block             10.0.0.0/16 
     IP range                    0.0.0.0 - 10.0.255.255   
     Subnet Mask                 255.255.0.0  
     IP Quantity                 65536   
@@ -71,23 +71,23 @@
 ```
     Amazon Linux AMI 
     T2 Micro Instance
-    VPC: cmpe281
+    VPC: cmpe172
     Public Subnet
     Auto Assign Public IP
-    Security Group: cmpe281-dmz (create new)
+    Security Group: cmpe172-dmz (create new)
         Open Ports: 22, 80, 443
-    Select Key Pair: cmpe281-us-west-1
+    Select Key Pair: cmpe172-us-west-1
     AWS Instance Name:  aws-php
 ```
 
 ## Connect to EC2 Instance:
 
 ```
-    chmod 400 cmpe281-us-west-1.pem
+    chmod 400 cmpe172-us-west-1.pem
     
     Connect to your instance using its Public DNS (For Example):
     
-    ssh -i cmpe281-us-west-1.pem ec2-user@ec2-54-67-49-23.us-west-1.compute.amazonaws.com
+    ssh -i cmpe172-us-west-1.pem ec2-user@ec2-54-67-49-23.us-west-1.compute.amazonaws.com
 ```
     
 ## PHP Setup on EC2 Linux AMI:

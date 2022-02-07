@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-demo
+  namespace: default
+  labels:
+    name: spring-demo
+spec:
+  containers:
+    - image: paulnguyen/spring-demo:latest
+      name: spring-demo
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP

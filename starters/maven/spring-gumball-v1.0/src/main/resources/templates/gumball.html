@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+<html>
+<head>
+    <title>Welcome to the Gumball Machine</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+<h1 align="center">Welcome to the Gumball Machine</h1>
+
+<!-- FORM SECTION -->
+<form name="form" th:object="${command}" method="post" action="">
+    <p>
+    <table id="msg" align="center" style="width:40%">
+      <tr>
+        <td>
+          <pre id="pre">
+          <span th:text="${message}" />
+          </pre>
+        </td>
+      </tr>
+    </table>
+    </p>
+    <p align="center"> <img th:src="@{/images/giant-gumball-machine.jpg}" width="385" height="316"/></p>
+    <br/>
+    <p align="center">
+        Special Instructions:  <input type="text" id="message" th:field="*{message}"/>
+        <br/>
+        <br/>
+        <br/>
+        <input type="submit" name="action" id="btnInsertQuarter" value="Insert Quarter">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" name="action" id="btnTurnCrank" value="Turn Crank">
+    </p>
+</form>
+<!-- END FORM SECTION -->
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<table align="center" style="width:100%" >
+<tr>
+  <td style="text-align: left;" >
+    <pre>Session ID:  <span th:text="${session}" /></pre>
+  </td>
+  <td style="text-align: right;" >
+    <pre>Server Host/IP:  <span th:text="${server}" /></pre>
+  </td>  
+</tr>
+</table>
+
+</body>
+</html>

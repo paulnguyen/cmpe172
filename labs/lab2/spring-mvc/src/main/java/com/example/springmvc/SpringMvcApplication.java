@@ -1,13 +1,13 @@
-package com.example.springgumball;
+package com.example.springmvc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringGumballApplication {
+public class SpringMvcApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringGumballApplication.class, args);
+        SpringApplication.run(SpringMvcApplication.class, args);
     }
 
 }

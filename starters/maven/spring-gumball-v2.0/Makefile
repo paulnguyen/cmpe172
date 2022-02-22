@@ -13,7 +13,7 @@ build:
 	mvn package
 
 run-jar: build
-	java -jar target/spring-gumball-1.0.jar
+	java -jar target/spring-gumball-2.0.jar
 
 # Docker
 
@@ -35,8 +35,8 @@ docker-shell:
 
 docker-push:
 	docker login
-	docker build -t $(account)/spring-gumball:v1.0 .
-	docker push $(account)/spring-gumball:v1.0 
+	docker build -t $(account)/spring-gumball:v2.0 .
+	docker push $(account)/spring-gumball:v2.0
 
 # Compose
 

@@ -6,7 +6,7 @@ clean:
 compile:
 	mvn compile
 
-run:
+run: compile
 	mvn spring-boot:run
 
 build:
@@ -44,7 +44,7 @@ network-ls:
 	docker network ls 
 
 network-create:
-	docker network create --driver bridge spring-gumball-v1_network
+	docker network create --driver bridge ${network}
 
 network-prune:
 	docker network prune

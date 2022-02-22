@@ -7,7 +7,7 @@ metadata:
     name: spring-gumball
 spec:
   containers:
-    - image: paulnguyen/spring-gumball:v1.0
+    - image: paulnguyen/spring-gumball:v2.0
       name: spring-gumball
       ports:
         - containerPort: 8080

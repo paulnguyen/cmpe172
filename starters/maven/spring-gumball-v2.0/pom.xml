@@ -77,7 +77,6 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <mainClass>com.example.springgumball.SpringGumballApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -11,7 +11,7 @@ docker exec -it dvwa bash
 
 ## Vunerable SQL Code
 
-* Source Files: /var/www/html/vulnerabilities/sqli/source
+* Source Files: /var/www/html/vulnerabilities/sqli/source/low.php
 * Note: $id comes from User Input
 
 ```

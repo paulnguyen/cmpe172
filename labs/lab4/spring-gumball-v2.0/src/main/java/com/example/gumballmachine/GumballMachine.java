@@ -33,6 +33,26 @@ public class GumballMachine {
 	void setState(State state) {
 		this.state = state;
 	}
+
+	public void setState( String state ) {
+		switch ( state ) {
+			case "com.example.gumballmachine.NoQuarterState":
+				this.state = noQuarterState ;
+				break ;
+			case "com.example.gumballmachine.HasQuarterState":
+				this.state = hasQuarterState ;
+				break ;
+			case "com.example.gumballmachine.SoldOutState":
+				this.state = soldOutState ;
+				break ;
+			case "com.example.gumballmachine.SoldState":
+				this.state = soldState ;
+				break ;
+			default:
+				this.state = noQuarterState ;
+				break ;
+		}
+	}	
  
 	void releaseBall() {
 		System.out.println("A gumball comes rolling out the slot...");
@@ -65,7 +85,7 @@ public class GumballMachine {
 	public String toString() {
 		StringBuffer result = new StringBuffer();
 		result.append("Mighty Gumball, Inc.");
-		result.append("\nSpring Boot Standing Gumball Model #2021");
+		result.append("\nSpring Boot Standing Gumball Model #2022");
 		result.append("\n\n");
 		result.append("\nMachine is " + state + "\n");
 		return result.toString();

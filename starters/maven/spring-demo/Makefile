@@ -13,6 +13,12 @@ build:
 run-jar:
 	java -jar target/spring-demo-1.0.jar
 
+run-jar-8081:
+	java -jar target/spring-demo-1.0.jar --server.port=8081
+
+run-jar-8082:
+	java -jar target/spring-demo-1.0.jar --server.port=8082
+
 
 # Docker
 

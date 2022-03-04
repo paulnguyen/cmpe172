@@ -1,0 +1,10 @@
+{
+    "created_at": 1618811330,
+    "consumer": {
+        "id": "db9d2d82-8381-415d-b8ff-a42d2879026e"
+    },
+    "id": "a47c093a-2317-465c-8d96-5fc003bddd6f",
+    "tags": null,
+    "ttl": null,
+    "key": "2H3fONTa8ugl1IcVS7CjLPnPIS2Hp9dJ"
+}

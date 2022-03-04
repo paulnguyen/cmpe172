@@ -1,0 +1,39 @@
+{
+	"id": "07915dbd-960d-4072-8c6a-c2f182f3ef1f",
+	"name": "STARBUCKS KONG",
+	"values": [
+		{
+			"key": "host",
+			"value": "localhost",
+			"enabled": true
+		},
+		{
+			"key": "port",
+			"value": "80",
+			"enabled": true
+		},
+		{
+			"key": "kong_host",
+			"value": "localhost",
+			"enabled": true
+		},
+		{
+			"key": "kong_port",
+			"value": "8001",
+			"enabled": true
+		},
+		{
+			"key": "api_key",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "plugin_id",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-04-19T06:37:42.922Z",
+	"_postman_exported_using": "Postman/8.0.9"
+}

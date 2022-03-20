@@ -1,0 +1,10 @@
+apiVersion: "extensions/v1beta1"
+kind: "Ingress"
+metadata:
+  name: "spring-gumball-ingress"
+  namespace: "default"
+spec:
+  backend:
+    serviceName: "spring-gumball-service"
+    servicePort: 8080
+

@@ -71,7 +71,7 @@
                                             <text transform="matrix(1 0 0 1 574.4219 433.8095)" id="svgexpire" class="st2 st5 st9">01/23</text>
                                             <text transform="matrix(1 0 0 1 479.3848 417.0097)" class="st2 st10 st11">VALID</text>
                                             <text transform="matrix(1 0 0 1 479.3848 435.6762)" class="st2 st10 st11">THRU</text>
-                                            <polygon class="st2" points="554.5,421 540.4,414.2 540.4,427.9    " />
+                                            <polygon class="st2" points="554.5,421 540.4,414.2 540.4,427.9 		" />
                                         </g>
                                         <g id="cchip">
                                             <g>
@@ -157,25 +157,25 @@
             <div class="col-50">
               <h3>Billing Address</h3>
               <label for="fname"><i class="fa fa-user"></i> First Name</label>
-              <input type="text" id="fname" name="firstname" placeholder="John"  th:field="*{firstname}" />
+              <input type="text" id="fname" name="firstname" placeholder="John" th:field="*{firstname}" />
               <label for="lname"><i class="fa fa-user"></i> Last Name</label>
-              <input type="text" id="lname" name="lirstname" placeholder="Doe"  th:field="*{lastname}" />
+              <input type="text" id="lname" name="lastname" placeholder="Doe" th:field="*{lastname}" />
               <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-              <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+              <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" th:field="*{address}" />
               <label for="city"><i class="fa fa-institution"></i> City</label>
-              <input type="text" id="city" name="city" placeholder="New York">
+              <input type="text" id="city" name="city" placeholder="New York" th:field="*{city}" />
               <div class="row">
                 <div class="col-50">
                   <label for="state">State</label>
-                  <input type="text" id="state" name="state" placeholder="NY">
+                  <input type="text" id="state" name="state" placeholder="NY" th:field="*{state}" />
                 </div>
                 <div class="col-50">
                   <label for="zip">Zip</label>
-                  <input type="text" id="zip" name="zip" placeholder="10001">
+                  <input type="text" id="zip" name="zip" placeholder="10001" th:field="*{zip}" />
                 </div>
               </div>
               <label for="phone">Phone Number</label>
-              <input type="text" id="phone" name="phonenumber" placeholder="(408) 123-0456">                
+              <input type="text" id="phone" name="phonenumber" placeholder="(408) 123-0456" th:field="*{phone}" />                
             </div>
 
             <div class="col-50">
@@ -188,23 +188,23 @@
                 <i class="fa fa-cc-discover" style="color:orange;"></i>
               </div>
               <label for="ccnum">Credit card number</label>
-              <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+              <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" th:field="*{cardnum}" />
               <label for="expmonth">Exp Month</label>
-              <input type="text" id="expmonth" name="expmonth" placeholder="September">
+              <input type="text" id="expmonth" name="expmonth" placeholder="September" th:field="*{cardexpmon}" />
               <div class="row">
                 <div class="col-50">
                   <label for="expyear">Exp Year</label>
-                  <input type="text" id="expyear" name="expyear" placeholder="2018">
+                  <input type="text" id="expyear" name="expyear" placeholder="2018" th:field="*{cardexpyear}" />
                 </div>
                 <div class="col-50">
                   <label for="cvv">CVV</label>
-                  <input type="text" id="cvv" name="cvv" placeholder="352">
+                  <input type="text" id="cvv" name="cvv" placeholder="352" th:field="*{cardcvv}" />
                 </div>
               </div>
               <label for="email"><i class="fa fa-envelope"></i> Email</label>
-              <input type="text" id="email" name="email" placeholder="john@example.com">
+              <input type="text" id="email" name="email" placeholder="john@example.com" th:field="*{email}" />
               <label for="notes"> Notes</label>
-              <input type="text" id="notes" name="notes" placeholder="special instructions">
+              <input type="text" id="notes" name="notes" placeholder="special instructions" th:field="*{notes}" />
             </div>
 
           </div>

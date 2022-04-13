@@ -1,8 +1,8 @@
 
 all: clean
 
-clean: 
-	gradle clean
+clean:
+	mvn clean
 
 docker-clean:
 	docker stop rabbitmq
@@ -31,14 +31,14 @@ console:
 # Management Console: http://localhost:8080
 # username and password of guest / guest:
 
+compile:
+	mvn compile
+
+run: compile
+	mvn spring-boot:run
+
 build:
-	gradle build
-
-run:
-	gradle bootRun
-
-jar:
-	gradle bootJar
+	mvn package
 
 # Docker
 

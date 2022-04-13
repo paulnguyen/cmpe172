@@ -2,7 +2,7 @@
 all: clean
 
 clean: 
-	gradle clean
+	mvn clean
 
 docker-clean:
 	docker stop rabbitmq
@@ -31,14 +31,20 @@ console:
 # Management Console: http://localhost:8080
 # username and password of guest / guest:
 
+compile:
+	mvn compile
+
+run: compile
+	mvn spring-boot:run
+
 build:
-	gradle build
+	mvn package
 
-run:
-	gradle bootRun
+send: jar
+	java -jar build/libs/spring-rabbitmq-workers-1.0.jar  --spring.profiles.active=$(env),work-queues,sender
 
-jar:
-	gradle bootJar
+receive: jar
+	java -jar build/libs/spring-rabbitmq-workers-1.0.jar --spring.profiles.active=$(env),work-queues,receiver
 
 # Docker
 
@@ -101,3 +107,30 @@ ingress-ip:
 	kubectl get ingress spring-rabbitmq-workers-ingress
 
 
+# Pod  
+
+pod-create:
+	kubectl create -f rabbitmq-pod.yaml
+
+pod-get:
+	kubectl get pods rabbitmq
+
+pod-shell:
+	kubectl exec -it rabbitmq -- /bin/bash
+
+pod-delete:
+	kubectl delete pod rabbitmq
+
+# Kubernetes Service
+
+console-create:
+	kubectl create -f rabbitmq-console.yaml
+
+console-get:
+	kubectl get services
+
+console-get-ip:
+	kubectl get service rabbitmq-console -o wide
+
+console-delete:
+	kubectl delete service rabbitmq-console

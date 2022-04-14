@@ -23,12 +23,6 @@ test:
 build: compile
 	gradle shadowJar
 
-spotbugs:
-	gradle spotbugsMain
-
-codesmells:
-	gradle smartsmells
-
 run: build
 	java -cp build/libs/starbucks-all.jar starbucks.Main 2>debug.log
 

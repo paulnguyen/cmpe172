@@ -18,7 +18,8 @@ public class MyCards extends Screen
      * @return Screen Contents
      */
     public String display() {
-        return card.getBalance() ;
+        String output = Utilities.center( card.getBalance() ) ;
+        return output ;
     }
 
     /**

@@ -23,11 +23,11 @@ network-create:
 network-inspect:
 	docker network inspect starbucks
 
+starbucks-api:
+	docker run --network starbucks --name starbucks-api -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
+
 docker-run:
 	docker run --name starbucks-nodejs -p 8080:8080 -td starbucks-nodejs
-
-docker-setup:
-	docker network create --driver bridge starbucks
 
 docker-launch:
 	docker run --network starbucks --name starbucks-nodejs -p 8080:8080  \

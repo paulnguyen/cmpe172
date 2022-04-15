@@ -31,3 +31,7 @@ docker-push:
 	docker login
 	docker build -t $(account)/starbucks-nodejs:latest .
 	docker push $(account)/starbucks-nodejs:latest
+	docker build -t $(account)/starbucks-nodejs:v3.0 .
+	docker push $(account)/starbucks-nodejs:v3.0
+
+			

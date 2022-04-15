@@ -26,12 +26,10 @@ build: compile
 run: build
 	java -cp build/libs/starbucks-all.jar starbucks.Main 2>debug.log
 
-network:
-	docker network create --driver bridge starbucks
+run-spring: build
+	java -cp build/libs/starbucks-all.jar \
+		-Dapiurl="http://localhost:8080" \
+		-Dapikey="2742a237475c4703841a2bf906531eb0" \
+		-Dregister="5012349" \
+		starbucks.Main 2>debug.log
 
-starbucks-api:
-	docker run --network starbucks --name starbucks-api -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
-
-starbucks-cashier:
-	docker run --network starbucks --name starbucks-nodejs -p 8080:8080  \
-	-e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0

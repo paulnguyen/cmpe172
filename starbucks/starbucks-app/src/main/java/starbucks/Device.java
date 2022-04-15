@@ -60,6 +60,9 @@ public class Device implements IApp, IPinAuthObserver {
         System.err.println( "Stored Pin    = " + d.getPin() ) ;
         System.err.println( "Authenticated = " + d.isAuthenticated() ) ;
         System.err.println( "Orientation   = " + d.getDeviceOrientation() ) ;
+        System.err.println( "API URL       = " + d.getProps("apiurl") ) ;
+        System.err.println( "API KEY       = " + d.getProps("apikey") ) ;
+        System.err.println( "API Register  = " + d.getProps("register") ) ;
         System.err.println( "============================================" ) ;
     }
 
@@ -159,12 +162,24 @@ public class Device implements IApp, IPinAuthObserver {
     }
 
     public synchronized static Device getNewInstance( String pin ) {
+
         theDevice = new Device() ;
-        
         theDevice.setPin( pin ) ;
-        theDevice.setProps( "apiurl", "http://localhost:3000" ) ;
-        theDevice.setProps( "apikey", "2742a237475c4703841a2bf906531eb0" ) ;
-        theDevice.setProps( "register", "5012349" ) ;
+
+        // Check for Properties from Command Line
+        // REF: https://www.baeldung.com/java-system-get-property-vs-system-getenv
+        // System.err.println( System.getProperty( "apiurl" ) ) ;
+        // System.err.println( System.getProperty( "apikey" ) ) ;
+        // System.err.println( System.getProperty( "register" ) ) ;
+
+        String apiurl = System.getProperty( "apiurl", "http://localhost:3000" ) ;
+        String apikey = System.getProperty( "apikey", "2742a237475c4703841a2bf906531eb0" ) ;
+        String register = System.getProperty( "register", "5012349" ) ;    
+        theDevice.setProps( "apiurl", apiurl ) ;
+        theDevice.setProps( "apikey", apikey ) ;
+        theDevice.setProps( "register", register ) ;
+
+        // Setup UI and Start the App
         theDevice.startUp() ;
 
         return theDevice ;

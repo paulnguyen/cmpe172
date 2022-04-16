@@ -193,11 +193,11 @@ DELETE 	/orders
 ## Example Usage for Starbucks Mobile App Simulator
 
 
-![1-starbucks-screen-flows](images/1-starbucks-screen-flows.png)
+![1-starbucks-screen-flows](images/starbucks-screen-flows.png)
 
-![2.starbucks-pin-screen](images/2.starbucks-pin-screen.png)
+![2.starbucks-pin-screen](images/starbucks-pin-screen.png)
 
-![3.starbucks-making-payments](images/3.starbucks-making-payments.png)
+![3.starbucks-making-payments](images/starbucks-making-payments.png)
 
 
 ## Explore the Sample Node.js and Java Mobile App Simulator
@@ -252,9 +252,12 @@ Run these Apps against the Starbucks API and explore how they work.
 
 ![nodejs-place-order](images/nodejs-place-order.png)
 
+
 ### Paying on the Starbucks App
 
-![4-starbucks-app-pay](images/4-starbucks-app-pay.png)
+* touch(3,3) to switch to "pay screen"
+
+![starbucks-pay-screen](images/starbucks-pay-screen.png)
 
 5. See Balance on Starbucks Card after Payment
 

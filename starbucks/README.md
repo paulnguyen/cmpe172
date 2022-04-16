@@ -189,20 +189,38 @@ DELETE 	/orders
 
 ```
 
+
+## Example Usage for Starbucks Mobile App Simulator
+
+* Screen Flows
+
+![1-starbucks-screen-flows](images/1-starbucks-screen-flows.png)
+
+* Starbucks PIN Screen
+
+![2.starbucks-pin-screen](images/2.starbucks-pin-screen.png)
+
+* Making Payments
+
+![3.starbucks-making-payments](images/3.starbucks-making-payments.png)
+
+
 ## Explore the Sample Node.js and Java Mobile App Simulator
 
-Run these Apps against the Starbucks Go API and explore how they work.
-
+Run these Apps against the Starbucks API and explore how they work.
 
 ### Example Workflow
 
-1. Run Starbucks API (Compile and run in Go)
+1. Run Starbucks API 
 
-* Launch via Docker Image:  paulnguyen/starbucks-api:v1.0
+* Launch via Docker Image:  paulnguyen/spring-starbucks-api
 
 ```
 	docker network create --driver bridge starbucks
-	docker run --network starbucks --name starbucks-api -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
+
+	docker run --network starbucks --name spring-starbucks-api -td -p 8080:8080 \
+	--platform=linux/amd64 paulnguyen/spring-starbucks-api	
+
 ```
 
 2. Starbucks App (Mobile App Simulator)
@@ -210,14 +228,16 @@ Run these Apps against the Starbucks Go API and explore how they work.
 * Requires Gradle 4.9 and Java JDK 8
 * Launch and Login with PIN: 1234 
 
-![1-starbucks-app](images/1-starbucks-app.png)
+![1-starbucks-app](images/starbucks-app.png)
 
 3. Placing an Order on the Starbucks Cash Register (Node.js App)
 
-* Run via Docker Image: paulnguyen/starbucks-nodejs:v1.0
+* Run via Docker Image: paulnguyen/starbucks-nodejs
 
 ```
-docker run --network starbucks --name starbucks-nodejs -p 8080:8080  -e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0
+	docker run --network starbucks --name starbucks-nodejs -td -p 90:9090  \
+	-e "api_endpoint=http://spring-starbucks-api:8080" \
+	--platform=linux/amd64 paulnguyen/starbucks-nodejs
 ```
 
 4. Paying on the Starbucks App

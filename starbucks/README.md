@@ -3,66 +3,77 @@
 
 ## REST API 
 
-Run the provided Starbucks API (written in Go).  See Demo in class on how to setup, build and run a Go Application.  Then test the Starbucks API, use the provided Insomnia Project.
+Run the provided Starbucks API.  See Demo in class on how to setup, build and run Starbucks API.  Then test using the provided Postman Project.
 
-![insomnia-project](images/insomnia-project.png)
+![postman-project](images/postman-project.png)
 
-The API Specification is as follows. 
 
 The Starbucks API Specification is as follows:
 
 ```
+Ping Health Check.
+
 GET 	/ping
-		Ping Health Check.
+		
 
 		{
-		  "Test": "Starbucks API version 1.0 alive!"
+		    "test": "Starbucks API version 3.1 alive!"
 		}		
+
+
+Get a list of Starbucks Cards (along with balances).
 
 GET 	/cards 
-		Get a list of Starbucks Cards (along with balances).
 
 		[
-		  {
-		    "CardNumber": "498498082",
-		    "CardCode": "425",
-		    "Balance": 20,
-		    "Activated": false,
-		    "Status": ""
-		  },
-		  {
-		    "CardNumber": "627131848",
-		    "CardCode": "547",
-		    "Balance": 20,
-		    "Activated": false,
-		    "Status": ""
-		  }
+		    {
+		        "cardNumber": "344329363",
+		        "cardCode": "257",
+		        "balance": 20.0,
+		        "activated": false,
+		        "status": "New Card"
+		    },
+		    {
+		        "cardNumber": "323586828",
+		        "cardCode": "607",
+		        "balance": 20.0,
+		        "activated": false,
+		        "status": "New Card"
+		    }
 		]		
 
+
+Create a new Starbucks Card.
+
 POST 	/cards
-		Create a new Starbucks Card.
 
 		{
-		  "CardNumber": "498498082",
-		  "CardCode": "425",
-		  "Balance": 20,
-		  "Activated": false,
-		  "Status": "New Card."
+		    "cardNumber": "299255600",
+		    "cardCode": "903",
+		    "balance": 20.0,
+		    "activated": false,
+		    "status": "New Card"
 		}
+
+
+Get the details of a specific Starbucks Card.
 
 GET 	/cards/{num}
-		Get the details of a specific Starbucks Card.
+
+		
 
 		{
-		  "CardNumber": "627131848",
-		  "CardCode": "547",
-		  "Balance": 20,
-		  "Activated": false,
-		  "Status": ""
-		}		
+		    "cardNumber": "299255600",
+		    "cardCode": "903",
+		    "balance": 20.0,
+		    "activated": false,
+		    "status": "New Card"
+		}
+
+
+Activate Card 
 
 POST 	/card/activate/{num}/{code}
-		Activate Card 
 
 		{
 		  "CardNumber": "627131848",
@@ -72,84 +83,109 @@ POST 	/card/activate/{num}/{code}
 		  "Status": ""
 		}
 
-POST    /order/register/{regid}
-        Create a new order. Set order as "active" for register.
 
+Create a new order. Set order as "active" for register.
+
+POST    /order/register/{regid}
+        
         Request:
 
-	    {
-	      "Drink": "Latte",
-	      "Milk":  "Whole",
-	      "Size":  "Grande"
-	    }         
+	{
+	    "drink": "Caffe Latte",
+	    "milk":  "Whole",
+	    "size":  "Grande"
+	}           
 
-	    Response:
+	Response:
 
-		{
-		  "Drink": "Latte",
-		  "Milk": "Whole",
-		  "Size": "Grande",
-		  "Total": 2.413125,
-		  "Status": "Ready for Payment."
-		}	    
+	{
+	    "drink": "Caffe Latte",
+	    "milk": "Whole",
+	    "size": "Grande",
+	    "total": 3.91,
+	    "status": "Ready for Payment.",
+	    "register": "5012349"
+	}	    
+
+
+Request the current state of the "active" Order.
 
 GET     /order/register/{regid}
-        Request the current state of the "active" Order.
+        
+	{
+	    "drink": "Caffe Latte",
+	    "milk": "Whole",
+	    "size": "Grande",
+	    "total": 3.91,
+	    "status": "Ready for Payment.",
+	    "register": "5012349"
+	}
 
-		{
-		  "Drink": "Latte",
-		  "Milk": "Whole",
-		  "Size": "Grande",
-		  "Total": 2.413125,
-		  "Status": "Ready for Payment."
-		}
+
+Clear the "active" Order.
 
 DELETE  /order/register/{regid}
-        Clear the "active" Order.
+       
+	{
+	    "Status": "Active Order Cleared!"
+	}
 
-		{
-		  "Status": "Active Order Cleared!"
-		}
+
+Process payment for the "active" Order. 
 
 POST    /order/register/{regid}/pay/{cardnum}
-        Process payment for the "active" Order. 
-
+        
         Response: (with updated card balance)
 
-		{
-		  "CardNumber": "627131848",
-		  "CardCode": "547",
-		  "Balance": 15.17375,
-		  "Activated": true,
-		  "Status": ""
-		}
+	{
+	    "cardNumber": "299255600",
+	    "cardCode": "903",
+	    "balance": 16.09,
+	    "activated": true,
+	    "status": "New Card"
+	}
+
+
+Get a list of all active orders (for all registers)
 
 GET     /orders
-        Get a list of all active orders (for all registers)
+        
+	[
+	    {
+	        "drink": "Caffe Latte",
+	        "milk": "Whole",
+	        "size": "Grande",
+	        "total": 3.91,
+	        "status": "Ready for Payment.",
+	        "register": "5012349"
+	    },
+	    {
+	        "drink": "Caffe Latte",
+	        "milk": "Whole",
+	        "size": "Grande",
+	        "total": 3.91,
+	        "status": "Paid with Card: 299255600 Balance: $16.09.",
+	        "register": "5012349"
+	    }
+	]
 
-		{
-		  "5012349": {
-		    "Drink": "Latte",
-		    "Milk": "Whole",
-		    "Size": "Grande",
-		    "Total": 4.82625,
-		    "Status": "Paid with Card: 627131848 Balance: $15.17."
-		  }
-		}
+
+Delete all Cards (Use for Unit Testing Teardown)
 
 DELETE 	/cards
-		Delete all Cards (Use for Unit Testing Teardown)
 
-		{
-		  "Status": "All Cards Cleared!"
-		}
+	{
+	  "Status": "All Cards Cleared!"
+	}
 
-DELETE 	/orders
-		Delete all Orders (Use for Unit Testing Teardown)
 
-		{
-		  "Status": "All Orders Cleared!"
-		}
+Delete all Orders (Use for Unit Testing Teardown)
+
+DELETE 	/orders	
+
+	{
+	  "Status": "All Orders Cleared!"
+	}
 
 ```
 

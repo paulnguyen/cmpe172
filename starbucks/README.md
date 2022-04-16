@@ -259,21 +259,27 @@ Run these Apps against the Starbucks API and explore how they work.
 
 ![starbucks-pay-screen](images/starbucks-pay-screen.png)
 
-5. See Balance on Starbucks Card after Payment
+* touch(2,2) to pay
 
-![5-starbucks-app-paid-balance](images/5-starbucks-app-paid-balance.png)
+![starbucks-make-payment](images/starbucks-make-payment.png)
+
+* touch(3,3) to see balance on Starbucks Card after payment
+
+![starbucks-app-paid-balance](images/starbucks-app-paid-balance.png)
 
 6. Check Starbucks Cash Register for Successful Payment (Node.js App)
 
-![6-starbucks-register-paid-for-order](images/6-starbucks-register-paid-for-order.png)
+* Click on "Get Order" to Refresh UI
 
-7. Sample REST API Calls from Insomnia (List Cards)
+![starbucks-register-paid-for-order](images/starbucks-register-paid-for-order.png)
 
-![7-rest-api-cardsp](images/7-rest-api-cards.png)
+7. Sample REST API Calls from Postman (List Cards)
 
-8. Sample REST API Calls from Insomnia (List Orders)
+![rest-api-cards](images/rest-api-cards.png)
 
-![8-rest-api-orders](images/8-rest-api-orders.png)
+8. Sample REST API Calls from Postman (List Orders)
+
+![rest-api-orders](images/rest-api-orders.png)
 
 
 

@@ -204,9 +204,9 @@ DELETE 	/orders
 
 Run these Apps against the Starbucks API and explore how they work.
 
-### Example Workflow
+## Example Workflow
 
-1. Run Starbucks API 
+### Run Starbucks API 
 
 * Launch via Docker Image:  paulnguyen/spring-starbucks-api
 
@@ -218,7 +218,7 @@ Run these Apps against the Starbucks API and explore how they work.
 
 ```
 
-2. Starbucks App (Mobile App Simulator)
+### Starbucks App (Mobile App Simulator)
 
 * Requires Gradle 4.9 and Java JDK 8
 * Launch and Login with PIN: 1234 
@@ -227,7 +227,7 @@ Run these Apps against the Starbucks API and explore how they work.
 
 ![1-starbucks-app](images/starbucks-app.png)
 
-3. Placing an Order on the Starbucks Cash Register (Node.js App)
+### Placing an Order on the Starbucks Cash Register (Node.js App)
 
 * Run via Docker Image: paulnguyen/starbucks-nodejs
 
@@ -237,7 +237,10 @@ Run these Apps against the Starbucks API and explore how they work.
 	--platform=linux/amd64 paulnguyen/starbucks-nodejs
 ```
 
-4. Paying on the Starbucks App
+![nodejs-cashier-app](images/nodejs-cashier-app.png)
+![nodejs-place-order](images/nodejs-place-order.png)
+
+### Paying on the Starbucks App
 
 ![4-starbucks-app-pay](images/4-starbucks-app-pay.png)
 

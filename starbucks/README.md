@@ -192,15 +192,10 @@ DELETE 	/orders
 
 ## Example Usage for Starbucks Mobile App Simulator
 
-* Screen Flows
 
 ![1-starbucks-screen-flows](images/1-starbucks-screen-flows.png)
 
-* Starbucks PIN Screen
-
 ![2.starbucks-pin-screen](images/2.starbucks-pin-screen.png)
-
-* Making Payments
 
 ![3.starbucks-making-payments](images/3.starbucks-making-payments.png)
 

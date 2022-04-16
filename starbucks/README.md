@@ -225,7 +225,14 @@ Run these Apps against the Starbucks API and explore how they work.
 	* touch(1,5), touch(2,5), touch(3,5) and touch(1,6)
 	* or just use the "login" shortcut 
 
-![1-starbucks-app](images/starbucks-app.png)
+* Starbucks App Pin Screen
+
+![starbucks-app](images/starbucks-app.png)
+
+* Main Screen After Login
+
+![starbucks-app-post-login](images/starbucks-app-post-login.png)
+
 
 ### Placing an Order on the Starbucks Cash Register (Node.js App)
 
@@ -237,7 +244,12 @@ Run these Apps against the Starbucks API and explore how they work.
 	--platform=linux/amd64 paulnguyen/starbucks-nodejs
 ```
 
+* Cashier App
+
 ![nodejs-cashier-app](images/nodejs-cashier-app.png)
+
+* Cashier App (Order Placed)
+
 ![nodejs-place-order](images/nodejs-place-order.png)
 
 ### Paying on the Starbucks App

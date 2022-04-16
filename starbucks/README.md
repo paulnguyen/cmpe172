@@ -222,6 +222,8 @@ Run these Apps against the Starbucks API and explore how they work.
 
 * Requires Gradle 4.9 and Java JDK 8
 * Launch and Login with PIN: 1234 
+	* touch(1,5), touch(2,5), touch(3,5) and touch(1,6)
+	* or just use the "login" shortcut 
 
 ![1-starbucks-app](images/starbucks-app.png)
 

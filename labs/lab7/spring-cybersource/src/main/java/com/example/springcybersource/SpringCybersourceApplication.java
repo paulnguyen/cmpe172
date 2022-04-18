@@ -47,7 +47,7 @@ public class SpringCybersourceApplication implements CommandLineRunner {
 		auth.billToZipCode = "10001" ;
 		auth.billToPhone = "(212) 123-9876" ;
 		auth.billToEmail = "john.doe@email.com" ;
-		auth.transactionAmount = "33.00" ;
+		auth.transactionAmount = "144.00" ;
 		auth.transactionCurrency = "USD" ;
 		auth.cardNumnber = "4111-1111-1111-1111" ;
 		auth.cardExpMonth = "10" ;
@@ -69,7 +69,7 @@ public class SpringCybersourceApplication implements CommandLineRunner {
 		if ( authValid ) {
 			capture.reference = "Order Number: 12345" ;
 			capture.paymentId = authResponse.id ;
-			capture.transactionAmount = "33.00" ;
+			capture.transactionAmount = "144.00" ;
 			capture.transactionCurrency = "USD" ;
 			System.out.println("\n\nCapture Request: " + capture.toJson() ) ;
 			captureResponse = api.capture(capture) ;
@@ -87,7 +87,7 @@ public class SpringCybersourceApplication implements CommandLineRunner {
 		if ( captureValid ) {
 			refund.reference = "Order Number: 12345" ;
 			refund.captureId = captureResponse.id ;
-			refund.transactionAmount = "33.00" ;
+			refund.transactionAmount = "144.00" ;
 			refund.transactionCurrency = "USD" ;
 			System.out.println("\n\nRefund Request: " + refund.toJson() ) ;
 			refundResponse = api.refund(refund) ;

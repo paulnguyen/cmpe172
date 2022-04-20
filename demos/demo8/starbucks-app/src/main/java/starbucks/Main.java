@@ -22,8 +22,9 @@ final class Main {
      * @param args No args expected.
      */
     public static void main(final String[] args) {
-        System.err.println( "Args: " + args ) ;
+        //System.err.println( "Args: " + args ) ;
         Device d = Device.getInstance() ;
+        d.debug() ;
         IApp app = (IApp) d ;
         Console c = System.console();
         String msg = "" ;

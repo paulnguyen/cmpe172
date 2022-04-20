@@ -18,7 +18,8 @@ public class MyCardsPay extends Screen
      */
     public String display() {
         String result = "[" + card.getCardId() + "]\n" + "\n\n" + "Scan Now" ;
-        return result ;
+        String output = Utilities.center( result ) ;
+        return output ;
     }
 
     /**

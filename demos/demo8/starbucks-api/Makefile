@@ -6,28 +6,20 @@ clean:
 compile:
 	mvn compile
 
-run: compile
-	mvn spring-boot:run
-
-build:
+build: compile
 	mvn package
 
-run-jar: build
-	java -jar target/spring-starbucks-api-2.0.jar
+run: build
+	echo Starting Spring at:  http://localhost:8080
+	java -jar target/spring-starbucks-api-3.1.jar --spring.profiles.active=dev
 
+run-dev: build
+	echo Starting Spring at:  http://localhost:8080
+	java -jar target/spring-starbucks-api-3.1.jar --spring.profiles.active=dev
 
-
-# Go API & Node.js App
-
-network:
-	docker network create --driver bridge starbucks
-
-backend:
-	docker run --network starbucks --name starbucks-api -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
-
-cashier:
-	docker run --network starbucks --name starbucks-nodejs -p 8080:8080  \
-	-e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0
+run-test: build
+	echo Starting Spring at:  http://localhost:8080
+	java -jar target/spring-starbucks-api-3.1.jar --spring.profiles.active=test
 
 
 
@@ -63,8 +55,10 @@ docker-shell:
 
 docker-push:
 	docker login
-	docker build -t $(account)/spring-starbucks-api:v2.0 -t $(account)/spring-starbucks-api:v2.0 .
-	docker push $(account)/spring-starbucks-api:v2.0 
+	docker build -t $(account)/spring-starbucks-api:latest .
+	docker push $(account)/spring-starbucks-api:latest
+	docker build -t $(account)/spring-starbucks-api:v3.1 .
+	docker push $(account)/spring-starbucks-api:v3.1
 
 # Compose
 
@@ -72,7 +66,7 @@ network-ls:
 	docker network ls 
 
 network-create:
-	docker network create --driver bridge spring-starbucks-api-network
+	docker network create --driver bridge starbucks-network
 
 network-prune:
 	docker network prune

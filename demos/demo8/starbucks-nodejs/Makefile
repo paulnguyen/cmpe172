@@ -7,7 +7,7 @@ run:
 	node app.js
 
 docker-build: 
-	docker build -t nodejs .
+	docker build -t starbucks-nodejs .
 	docker images
 
 docker-clean:
@@ -24,11 +24,14 @@ network-inspect:
 	docker network inspect starbucks
 
 docker-run:
-	docker run --name starbucks-nodejs -p 8080:8080 -td starbucks-nodejs
+	docker run --network starbucks --name starbucks-nodejs -p 90:9090  \
+	-e "api_endpoint=http://spring-starbucks-api:8080" -td starbucks-nodejs
 
-docker-setup:
-	docker network create --driver bridge starbucks
+docker-push:
+	docker login
+	docker build -t $(account)/starbucks-nodejs:latest .
+	docker push $(account)/starbucks-nodejs:latest
+	docker build -t $(account)/starbucks-nodejs:v3.0 .
+	docker push $(account)/starbucks-nodejs:v3.0
 
-docker-launch:
-	docker run --network starbucks --name starbucks-nodejs -p 8080:8080  \
-	-e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0
+			

@@ -7,8 +7,8 @@ Starbucks Reserved | Cachier's App
 
 // Node.js Environment Settings
 
-//var api_endpoint    =  (process.env.api_endpoint    || "http://localhost:8000/starbucks"    ) ;
-var api_endpoint    =  (process.env.api_endpoint    || "http://localhost:3000"              ) ;
+//var api_endpoint    =  (process.env.api_endpoint    || "http://localhost:8080/starbucks"    ) ;
+var api_endpoint    =  (process.env.api_endpoint    || "http://localhost:8080"              ) ;
 var api_key         =  (process.env.api_key         || "2742a237475c4703841a2bf906531eb0"   ) ;
 var secret_key      =  (process.env.secret_key      || "kwRg54x2Go9iEdl49jFENRM12Mp711QI"   ) ;
 var register_id     =  (process.env.register_id     || "5012349" ) ; // default to Dub-C Store
@@ -103,23 +103,22 @@ var page = function( req, res, ts ) {
         function(data, response_raw){
             console.log( "** GET **")
             console.log("Current Order for Register " + register_id + ": " + data);
-            //for(var key in data) {
-            //    console.log( "key:" + key + ", value:" + data[key] );
-            //}
-            jsdata = JSON.parse(data)
-            for(var key in jsdata) {
-                console.log( "key:" + key + ", value:" + jsdata[key] );
-            }                   
-            drink = jsdata.Drink ;
-            milk  = jsdata.Milk  ;
-            size  = jsdata.Size  ;
-            total = jsdata.Total ;
-            status = jsdata.Status ;
+            
+            // for(var key in data) {
+            //     console.log( "key:" + key + ", value:" + data[key] );
+            // }
 
             var msg =   "\n\nStarbucks Reserved Order\n\n" ;
+            
+            drink = data.drink ;
+            milk  = data.milk  ;
+            size  = data.size  ;
+            total = data.total ;
+            status = data.status ;
 
             if ( !drink ) {
                 console.log( "No Order Found!")
+                status = "Ready for New Order" ;
             } else {
                 msg = msg +
                     "Drink: " + drink + "\n" +
@@ -127,6 +126,18 @@ var page = function( req, res, ts ) {
                     "Size:  " + size +"\n" +
                     "Total: " + formatter.format(total) +"\n" ;            
             }
+
+
+            // jsdata = JSON.parse(data)
+            // for(var key in jsdata) {
+            //     console.log( "key:" + key + ", value:" + jsdata[key] );
+            // }                   
+            // drink = jsdata.drink ;
+            // milk  = jsdata.milk  ;
+            // size  = jsdata.size  ;
+            // total = jsdata.total ;
+            // status = jsdata.status ;
+
 
             msg = msg +
                     "\n" +
@@ -164,7 +175,7 @@ var order = function( req, res, action, ts, body ) {
     var client = new Client();
 
     var args = {
-        headers: { "apikey": api_key },
+        headers: { "apikey": api_key, "Content-Type": "application/json" },
         data: body
     };
 
@@ -174,7 +185,7 @@ var order = function( req, res, action, ts, body ) {
         console.log( "Creating Order...")
         client.post( api_endpoint + "/order/register/" + register_id, args,
             function(data, response_raw) {
-                jsdata = JSON.parse(data)
+                //jsdata = JSON.parse(data)
                 console.log( "** POST **")
                 console.log(data);
                 //for(var key in jsdata) {
@@ -187,7 +198,7 @@ var order = function( req, res, action, ts, body ) {
         console.log( "Clearing Order...")
         client.delete( api_endpoint + "/order/register/" + register_id, args,
             function(data, response_raw) {
-                jsdata = JSON.parse(data)
+                //jsdata = JSON.parse(data)
                 console.log( "** DELETE **")
                 console.log(data);
                 //for(var key in jsdata) {
@@ -247,9 +258,9 @@ var handle_post = function (req, res, next) {
         action = "new-order" ;
         //hash = get_hash ( state, ts ) ;
         var data = {
-            Drink : getDrink(),
-            Milk :  getMilk(),
-            Size :  getSize()
+            drink : getDrink(),
+            milk :  getMilk(),
+            size :  getSize()
         } ;
         order(req, res, action, ts, data ) ;   
     }
@@ -283,12 +294,12 @@ app.get('/', handle_get ) ;
 app.post('/', handle_post ) ;
 
 
-console.log( "Server running on Port 8080..." ) ;
+console.log( "Server running on Port 9090..." ) ;
 console.log( "==> api_endpoint: " + api_endpoint ) ;
 console.log( "==> api_key:      " + api_key ) ;
 console.log( "==> secret_key:   " + secret_key ) ;
-//console.log( "==> register_id:  " + register_id ) ;
+console.log( "==> register_id:  " + register_id ) ;
 
 
-app.listen(8080);
+app.listen(9090);
 

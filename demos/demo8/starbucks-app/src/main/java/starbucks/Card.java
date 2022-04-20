@@ -68,9 +68,9 @@ public class Card {
             JSONObject json = response.getBody().getObject() ;
             System.err.println( json.toString() ) ;
 
-            this.cardId = json.getString( "CardNumber" ) ;
-            this.cardCode = json.getString( "CardCode" ) ;
-            this.balance = json.getDouble( "Balance" )  ;     
+            this.cardId = json.getString( "cardNumber" ) ;
+            this.cardCode = json.getString( "cardCode" ) ;
+            this.balance = json.getDouble( "balance" )  ;     
 
             System.err.println( "New Card: " + cardId + "[" + cardCode + "] Balance: " + balance ) ;
 
@@ -122,7 +122,7 @@ public class Card {
             JSONObject json = response.getBody().getObject() ;
             System.err.println( json.toString() ) ;
 
-            double new_bal = json.getDouble( "Balance" )  ;  
+            double new_bal = json.getDouble( "balance" )  ;  
             this.balance = new_bal ;    
 
         } catch (Exception e) {

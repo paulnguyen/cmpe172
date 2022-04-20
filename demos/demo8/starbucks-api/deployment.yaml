@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spring-starbucks-api
-        image: paulnguyen/spring-starbucks-api:v2.0
+        image: paulnguyen/spring-starbucks-api:v3.0
         env:
         - name: MYSQL_HOST
           value: "72.22.16.2"   

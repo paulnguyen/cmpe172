@@ -3,66 +3,77 @@
 
 ## REST API 
 
-Run the provided Starbucks API (written in Go).  See Demo in class on how to setup, build and run a Go Application.  Then test the Starbucks API, use the provided Insomnia Project.
+Run the provided Starbucks API.  See Demo in class on how to setup, build and run Starbucks API.  Then test using the provided Postman Project.
 
-![insomnia-project](images/insomnia-project.png)
+![postman-project](images/postman-project.png)
 
-The API Specification is as follows. 
 
 The Starbucks API Specification is as follows:
 
 ```
+Ping Health Check.
+
 GET 	/ping
-		Ping Health Check.
+		
 
 		{
-		  "Test": "Starbucks API version 1.0 alive!"
+		    "test": "Starbucks API version 3.1 alive!"
 		}		
+
+
+Get a list of Starbucks Cards (along with balances).
 
 GET 	/cards 
-		Get a list of Starbucks Cards (along with balances).
 
 		[
-		  {
-		    "CardNumber": "498498082",
-		    "CardCode": "425",
-		    "Balance": 20,
-		    "Activated": false,
-		    "Status": ""
-		  },
-		  {
-		    "CardNumber": "627131848",
-		    "CardCode": "547",
-		    "Balance": 20,
-		    "Activated": false,
-		    "Status": ""
-		  }
+		    {
+		        "cardNumber": "344329363",
+		        "cardCode": "257",
+		        "balance": 20.0,
+		        "activated": false,
+		        "status": "New Card"
+		    },
+		    {
+		        "cardNumber": "323586828",
+		        "cardCode": "607",
+		        "balance": 20.0,
+		        "activated": false,
+		        "status": "New Card"
+		    }
 		]		
 
+
+Create a new Starbucks Card.
+
 POST 	/cards
-		Create a new Starbucks Card.
 
 		{
-		  "CardNumber": "498498082",
-		  "CardCode": "425",
-		  "Balance": 20,
-		  "Activated": false,
-		  "Status": "New Card."
+		    "cardNumber": "299255600",
+		    "cardCode": "903",
+		    "balance": 20.0,
+		    "activated": false,
+		    "status": "New Card"
 		}
+
+
+Get the details of a specific Starbucks Card.
 
 GET 	/cards/{num}
-		Get the details of a specific Starbucks Card.
+
+		
 
 		{
-		  "CardNumber": "627131848",
-		  "CardCode": "547",
-		  "Balance": 20,
-		  "Activated": false,
-		  "Status": ""
-		}		
+		    "cardNumber": "299255600",
+		    "cardCode": "903",
+		    "balance": 20.0,
+		    "activated": false,
+		    "status": "New Card"
+		}
+
+
+Activate Card 
 
 POST 	/card/activate/{num}/{code}
-		Activate Card 
 
 		{
 		  "CardNumber": "627131848",
@@ -72,137 +83,203 @@ POST 	/card/activate/{num}/{code}
 		  "Status": ""
 		}
 
-POST    /order/register/{regid}
-        Create a new order. Set order as "active" for register.
 
+Create a new order. Set order as "active" for register.
+
+POST    /order/register/{regid}
+        
         Request:
 
-	    {
-	      "Drink": "Latte",
-	      "Milk":  "Whole",
-	      "Size":  "Grande"
-	    }         
+	{
+	    "drink": "Caffe Latte",
+	    "milk":  "Whole",
+	    "size":  "Grande"
+	}           
 
-	    Response:
+	Response:
 
-		{
-		  "Drink": "Latte",
-		  "Milk": "Whole",
-		  "Size": "Grande",
-		  "Total": 2.413125,
-		  "Status": "Ready for Payment."
-		}	    
+	{
+	    "drink": "Caffe Latte",
+	    "milk": "Whole",
+	    "size": "Grande",
+	    "total": 3.91,
+	    "status": "Ready for Payment.",
+	    "register": "5012349"
+	}	    
+
+
+Request the current state of the "active" Order.
 
 GET     /order/register/{regid}
-        Request the current state of the "active" Order.
+        
+	{
+	    "drink": "Caffe Latte",
+	    "milk": "Whole",
+	    "size": "Grande",
+	    "total": 3.91,
+	    "status": "Ready for Payment.",
+	    "register": "5012349"
+	}
 
-		{
-		  "Drink": "Latte",
-		  "Milk": "Whole",
-		  "Size": "Grande",
-		  "Total": 2.413125,
-		  "Status": "Ready for Payment."
-		}
+
+Clear the "active" Order.
 
 DELETE  /order/register/{regid}
-        Clear the "active" Order.
+       
+	{
+	    "Status": "Active Order Cleared!"
+	}
 
-		{
-		  "Status": "Active Order Cleared!"
-		}
+
+Process payment for the "active" Order. 
 
 POST    /order/register/{regid}/pay/{cardnum}
-        Process payment for the "active" Order. 
-
+        
         Response: (with updated card balance)
 
-		{
-		  "CardNumber": "627131848",
-		  "CardCode": "547",
-		  "Balance": 15.17375,
-		  "Activated": true,
-		  "Status": ""
-		}
+	{
+	    "cardNumber": "299255600",
+	    "cardCode": "903",
+	    "balance": 16.09,
+	    "activated": true,
+	    "status": "New Card"
+	}
+
+
+Get a list of all active orders (for all registers)
 
 GET     /orders
-        Get a list of all active orders (for all registers)
+        
+	[
+	    {
+	        "drink": "Caffe Latte",
+	        "milk": "Whole",
+	        "size": "Grande",
+	        "total": 3.91,
+	        "status": "Ready for Payment.",
+	        "register": "5012349"
+	    },
+	    {
+	        "drink": "Caffe Latte",
+	        "milk": "Whole",
+	        "size": "Grande",
+	        "total": 3.91,
+	        "status": "Paid with Card: 299255600 Balance: $16.09.",
+	        "register": "5012349"
+	    }
+	]
 
-		{
-		  "5012349": {
-		    "Drink": "Latte",
-		    "Milk": "Whole",
-		    "Size": "Grande",
-		    "Total": 4.82625,
-		    "Status": "Paid with Card: 627131848 Balance: $15.17."
-		  }
-		}
+
+Delete all Cards (Use for Unit Testing Teardown)
 
 DELETE 	/cards
-		Delete all Cards (Use for Unit Testing Teardown)
 
-		{
-		  "Status": "All Cards Cleared!"
-		}
+	{
+	  "Status": "All Cards Cleared!"
+	}
 
-DELETE 	/orders
-		Delete all Orders (Use for Unit Testing Teardown)
 
-		{
-		  "Status": "All Orders Cleared!"
-		}
+Delete all Orders (Use for Unit Testing Teardown)
+
+DELETE 	/orders	
+
+	{
+	  "Status": "All Orders Cleared!"
+	}
 
 ```
+
+
+## Example Usage for Starbucks Mobile App Simulator
+
+
+![1-starbucks-screen-flows](images/starbucks-screen-flows.png)
+
+![2.starbucks-pin-screen](images/starbucks-pin-screen.png)
+
+![3.starbucks-making-payments](images/starbucks-making-payments.png)
+
 
 ## Explore the Sample Node.js and Java Mobile App Simulator
 
-Run these Apps against the Starbucks Go API and explore how they work.
+Run these Apps against the Starbucks API and explore how they work.
 
+## Example Workflow
 
-### Example Workflow
+### Run Starbucks API 
 
-1. Run Starbucks API (Compile and run in Go)
-
-* Launch via Docker Image:  paulnguyen/starbucks-api:v1.0
+* Launch via Docker Image:  paulnguyen/spring-starbucks-api
 
 ```
 	docker network create --driver bridge starbucks
-	docker run --network starbucks --name starbucks-api -p 3000:3000 -td paulnguyen/starbucks-api:v1.0
+
+	docker run --network starbucks --name spring-starbucks-api -td -p 8080:8080 \
+	--platform=linux/amd64 paulnguyen/spring-starbucks-api	
+
 ```
 
-2. Starbucks App (Mobile App Simulator)
+### Starbucks App (Mobile App Simulator)
 
 * Requires Gradle 4.9 and Java JDK 8
 * Launch and Login with PIN: 1234 
+	* touch(1,5), touch(2,5), touch(3,5) and touch(1,6)
+	* or just use the "login" shortcut 
 
-![1-starbucks-app](images/1-starbucks-app.png)
+* Starbucks App Pin Screen
 
-3. Placing an Order on the Starbucks Cash Register (Node.js App)
+![starbucks-app](images/starbucks-app.png)
 
-* Run via Docker Image: paulnguyen/starbucks-nodejs:v1.0
+* Main Screen After Login
+
+![starbucks-app-post-login](images/starbucks-app-post-login.png)
+
+
+### Placing an Order on the Starbucks Cash Register (Node.js App)
+
+* Run via Docker Image: paulnguyen/starbucks-nodejs
 
 ```
-docker run --network starbucks --name starbucks-nodejs -p 8080:8080  -e "api_endpoint=http://starbucks-api:3000" -td paulnguyen/starbucks-nodejs:v1.0
+	docker run --network starbucks --name starbucks-nodejs -td -p 90:9090  \
+	-e "api_endpoint=http://spring-starbucks-api:8080" \
+	--platform=linux/amd64 paulnguyen/starbucks-nodejs
 ```
 
-4. Paying on the Starbucks App
+* Cashier App
 
-![4-starbucks-app-pay](images/4-starbucks-app-pay.png)
+![nodejs-cashier-app](images/nodejs-cashier-app.png)
 
-5. See Balance on Starbucks Card after Payment
+* Cashier App (Order Placed)
 
-![5-starbucks-app-paid-balance](images/5-starbucks-app-paid-balance.png)
+![nodejs-place-order](images/nodejs-place-order.png)
+
+
+### Paying on the Starbucks App
+
+* touch(3,3) to switch to "pay screen"
+
+![starbucks-pay-screen](images/starbucks-pay-screen.png)
+
+* touch(2,2) to pay
+
+![starbucks-make-payment](images/starbucks-make-payment.png)
+
+* touch(3,3) to see balance on Starbucks Card after payment
+
+![starbucks-app-paid-balance](images/starbucks-app-paid-balance.png)
 
 6. Check Starbucks Cash Register for Successful Payment (Node.js App)
 
-![6-starbucks-register-paid-for-order](images/6-starbucks-register-paid-for-order.png)
+* Click on "Get Order" to Refresh UI
 
-7. Sample REST API Calls from Insomnia (List Cards)
+![starbucks-register-paid-for-order](images/starbucks-register-paid-for-order.png)
 
-![7-rest-api-cardsp](images/7-rest-api-cards.png)
+7. Sample REST API Calls from Postman (List Cards)
 
-8. Sample REST API Calls from Insomnia (List Orders)
+![rest-api-cards](images/rest-api-cards.png)
 
-![8-rest-api-orders](images/8-rest-api-orders.png)
+8. Sample REST API Calls from Postman (List Orders)
+
+![rest-api-orders](images/rest-api-orders.png)
 
 
 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+<html>
+<head>
+    <title>REST API CONSOLE</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+<h1 align="center">REST API CONSOLE</h1>
+
+<!-- FORM SECTION -->
+<form name="form" th:object="${command}" method="post" action="">
+    <p align="center">
+        <br/>
+        <br/>
+        <br/>
+        <input type="submit" name="action" id="get" value="GET">
+        &nbsp;&nbsp;&nbsp;
+        <input type="submit" name="action" id="post" value="POST">
+    </p>
+    <p>
+    <table id="msg" align="center" style="width:40%">
+      <tr>
+        <td>
+          <pre align="left" id="pre">
+          <span th:text="${message}"></span>
+          </pre>
+        </td>
+      </tr>
+    </table>
+    </p>
+    <br/>
+</form>
+<!-- END FORM SECTION -->
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+</body>
+</html>

@@ -4,6 +4,7 @@ version: "3"
 services:
   gumball:
     image: spring-gumball
+    platform: linux/amd64
     volumes:
       - /tmp:/tmp
     networks:
@@ -13,6 +14,7 @@ services:
     restart: always     
   lb:
     image: eeacms/haproxy
+    platform: linux/amd64
     depends_on:
     - gumball
     ports:

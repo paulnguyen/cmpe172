@@ -66,6 +66,8 @@ public class GumballMachineController {
     
         HttpSession session = request.getSession() ;
         GumballMachine gm = (GumballMachine) session.getAttribute("gumball") ;
+        String input_state = command.getState() ;
+        gm.setState( input_state ) ;
 
         if ( action.equals("Insert Quarter") ) {
             gm.insertQuarter() ;
@@ -75,6 +77,8 @@ public class GumballMachineController {
             command.setMessage("") ;
             gm.turnCrank() ;
         } 
+
+        command.setState( gm.getState().getClass().getName() ) ;
 
         session.setAttribute( "gumball", gm) ;
         String message = gm.toString() ;

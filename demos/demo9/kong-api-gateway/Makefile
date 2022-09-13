@@ -22,10 +22,10 @@ network-inspect:
 	docker network inspect kong-network
 
 starbucks-api:	
-	docker run -d --name starbucks-api --network kong-network -td spring-starbucks-api
+	docker run --platform=linux/amd64 -d --name starbucks-api --network kong-network -td spring-starbucks-api
 
 jumpbox:
-	docker run --name jumpbox --network kong-network -td ubuntu
+	docker run --platform=linux/amd64 --name jumpbox --network kong-network -td ubuntu
 
 jumpbox-shell:
 	docker exec -it jumpbox bash
@@ -43,7 +43,7 @@ install-curl:
 	apk --no-cache add curl
 
 kong-db:
-	docker run -d --name kong-database \
+	docker run --platform=linux/amd64 -d --name kong-database \
                --network=kong-network \
                -p 5432:5432 \
                -e "POSTGRES_USER=kong" \
@@ -52,7 +52,7 @@ kong-db:
                postgres:9.6
 
 kong-setup:
-	docker run --rm \
+	docker run --platform=linux/amd64 --rm \
      --network=kong-network \
      -e "KONG_DATABASE=postgres" \
      -e "KONG_PG_HOST=kong-database" \
@@ -62,7 +62,7 @@ kong-setup:
      kong:2.4.0 kong migrations bootstrap
 
 kong:
-	docker run -d --name kong \
+	docker run --platform=linux/amd64 -d --name kong \
      --network=kong-network \
      -e "KONG_DATABASE=postgres" \
      -e "KONG_PG_HOST=kong-database" \
@@ -81,7 +81,7 @@ kong:
      kong:2.4.0
 
 kong-dbless:
-	docker run -d --name kong \
+	docker run --platform=linux/amd64 -d --name kong \
     --network=kong-network \
     -e "KONG_DATABASE=off" \
     -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
@@ -110,7 +110,7 @@ kong-ping:
 
 
 jumpbox:
-    docker run --network test --name jumpbox -t -d ubuntu
+    docker run --platform=linux/amd64 --network test --name jumpbox -t -d ubuntu
 
 shell:
     docker exec -it jumpbox bash 

@@ -31,7 +31,7 @@ docker-clean-all:
 	docker rmi $(docker images -q)
 
 docker-run:
-	docker run -dit --name phptest -p 8080:80 phptest
+	docker run --platform=linux/amd64 -dit --name phptest -p 8080:80 phptest
 	docker ps
 
 docker-stop:

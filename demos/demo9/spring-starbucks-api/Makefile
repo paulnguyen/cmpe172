@@ -24,7 +24,7 @@ run-test: build
 
 
 mysql:
-	docker run -d --network starbucks --name mysql -td -p 3306:3306 -e MYSQL_ROOT_PASSWORD=cmpe172 mysql:8.0
+	docker run --platform=linux/amd64 -d --network starbucks --name mysql -td -p 3306:3306 -e MYSQL_ROOT_PASSWORD=cmpe172 mysql:8.0
 
 mysql-shell:
 	docker exec -it mysql bash 
@@ -33,14 +33,14 @@ mysql-shell:
 # Docker
 
 docker-build: build
-	docker build -t spring-starbucks-api .
+	docker build --platform=linux/amd64 -t spring-starbucks-api .
 	docker images
 
 starbucks-network:
 	docker network create --driver bridge starbucks
 
 docker-run: docker-build
-	docker run --network starbucks -e "MYSQL_HOST=mysql" --name spring-starbucks-api -td -p 8080:8080 spring-starbucks-api	
+	docker run --platform=linux/amd64 --network starbucks -e "MYSQL_HOST=mysql" --name spring-starbucks-api -td -p 8080:8080 spring-starbucks-api	
 
 docker-clean:
 	docker stop spring-starbucks-api
@@ -52,7 +52,7 @@ docker-shell:
 
 docker-push:
 	docker login
-	docker build -t $(account)/spring-starbucks-api:latest .
+	docker build --platform=linux/amd64 -t $(account)/spring-starbucks-api:latest .
 	docker push $(account)/spring-starbucks-api:latest
 
 # Compose

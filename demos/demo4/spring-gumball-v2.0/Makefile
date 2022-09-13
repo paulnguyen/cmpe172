@@ -18,11 +18,11 @@ run-jar: build
 # Docker
 
 docker-build: build
-	docker build -t spring-gumball .
+	docker build --platform=linux/amd64 -t spring-gumball .
 	docker images
 
 docker-run: docker-build
-	docker run --name spring-gumball -td -p 80:8080 spring-gumball	
+	docker run --platform=linux/amd64 --name spring-gumball -td -p 80:8080 spring-gumball	
 	docker ps
 
 docker-clean:
@@ -35,7 +35,7 @@ docker-shell:
 
 docker-push:
 	docker login
-	docker build -t $(account)/spring-gumball:v2.0 .
+	docker build --platform=linux/amd64 -t $(account)/spring-gumball:v2.0 .
 	docker push $(account)/spring-gumball:v2.0
 
 # Compose

@@ -1,6 +1,8 @@
 
 # SQL Injection Demo
 
+* https://owasp.org/www-community/attacks/SQL_Injection
+
 
 ## Source Code Location
 ```
@@ -18,8 +20,15 @@ docker exec -it dvwa bash
 SELECT first_name, last_name FROM users WHERE user_id = '$id';
 ```
 
-## On Web Form, Try
+## DVWA Security Settings
 
+* Click on "DVWA Security" (http://localhost/security.php)
+* Set Security Level to "Low"
+
+
+## On "SQL Injection" Web Form, Try
+
+* Click on "SQL Injection" (http://localhost/vulnerabilities/sqli)
 * User ID = Re11k'
 * Should Get Error:
 ```

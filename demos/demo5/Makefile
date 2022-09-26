@@ -5,18 +5,18 @@ clean:
 	docker network prune
 
 dvwa-run: 
-	docker run --name dvwa --network attack --rm -td -p 80:80 vulnerables/web-dvwa
+	docker run --platform=linux/amd64 --name dvwa --network attack --rm -td -p 80:80 vulnerables/web-dvwa
 	docker ps
 
 dvwa-shell:
 	docker exec -it dvwa bash 
 
 zap-run:
-	docker run --name zap --network attack -u zap -p 8080:8080 -p 8090:8090 -td owasp/zap2docker-stable zap-webswing.sh
+	docker run --platform=linux/amd64 --name zap --network attack -u zap -p 8080:8080 -p 8090:8090 -td owasp/zap2docker-stable zap-webswing.sh
 	docker ps
 
 kali-run:
-	docker run --name kali --network attack --tty --interactive kalilinux/kali-rolling /bin/bash
+	docker run --platform=linux/amd64 --name kali --network attack --tty --interactive kalilinux/kali-rolling /bin/bash
 
 net:
 	docker network create --driver bridge attack

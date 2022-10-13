@@ -1,14 +1,17 @@
-clean:
+clean: docker-build
+	
+docker-clean:
 	docker stop redis
 	docker rm redis
+	docker rmi redis
 
-network:
-	docker network create --driver bridge gumball
+docker-build: 
+	docker build --platform=linux/amd64 -t redis .
+	docker images
 
-redis:
-	docker run --name redis --network gumball -td -p 6379:6379 redis:4.0
+redis-local:
+	docker run --platform=linux/amd64 --name redis --network gumball -td -p 6379:6379 redis
 
-
-shell:
-	docker exec -it redis bash 
+redis-official:
+	docker run --platform=linux/amd64 --name redis --network gumball -td -p 6379:6379 redis:4.0
 

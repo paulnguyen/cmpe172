@@ -4,7 +4,6 @@ version: "3"
 services:
   mysql:
     image: mysql:8.0
-    platform: linux/amd64
     volumes:
       - /tmp:/tmp
     networks:
@@ -18,7 +17,6 @@ services:
     restart: always     
   starbucks:
     image: spring-starbucks-api
-    platform: linux/amd64
     depends_on:
     - mysql    
     volumes:
@@ -32,7 +30,6 @@ services:
     restart: always     
   lb:
     image: eeacms/haproxy
-    platform: linux/amd64
     depends_on:
     - starbucks
     ports:

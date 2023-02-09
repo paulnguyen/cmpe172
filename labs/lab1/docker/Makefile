@@ -1,17 +1,21 @@
 all: clean
 
+
 clean:
-	gradle clean
+	mvn clean
 
 compile:
-	gradle build
+	mvn compile
 
-jar: compile
-	gradle bootJar
+run: compile
+	mvn spring-boot:run
 
-run: jar
+build:
+	mvn package
+
+run: build
 	echo Starting Spring at:  http://localhost:8080
-	java -jar build/libs/demo-docker-1.0.jar
+	java -jar ./start/demo-docker-1.0.jar
 
 # Docker
 

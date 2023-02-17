@@ -45,7 +45,7 @@ compose-network:
 	docker network create --driver bridge dck_network
 
 compose-up:
-	docker-compose up --scale phptest=2 -d
+	docker-compose up --scale phptest=4 -d
 
 compose-down:
 	docker-compose down 	

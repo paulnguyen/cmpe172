@@ -3,7 +3,7 @@ version: "3"
 
 services:
   phptest:
-    image: paulnguyen/phptest
+    image: phptest
     platform: linux/amd64
     volumes:
       - /tmp:/tmp
@@ -24,6 +24,7 @@ services:
       BACKENDS: "phptest"
       DNS_ENABLED: "true"
       LOG_LEVEL: "info"
+      COOKIES_ENABLED: "true"
     networks:
       - network
 
